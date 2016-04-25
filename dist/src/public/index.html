@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Snake</title>
+        <style>
+            #canvas {
+                float: left;
+            }
+            #dialogInitDiv{
+                height: 30px;
+            }
+            #rightDiv {
+                float: left;
+                margin-left: 15px;
+            }
+        </style> 
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="models.js"></script>
+        <script src="controller.js"></script>
+        <script src="interaction.js"></script>
+        <script src="view.js"></script>
+    </head>
+ 
+    <body>
+        <h1>Snake</h1>
+
+        <form action="/" method="post" id="formulaire_chat">
+            <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+            <input type="submit" id="envoi_message" value="Envoyer" />
+        </form>
+
+        <canvas id="canvas">
+        
+        </canvas>
+
+        <div id="rightDiv">
+            <ul id="listPlayers">
+            
+            </ul>
+        </div>
+        
+        
+        
+        
+        <div id="dialogInit" title="Basic dialog">
+            <div id="dialogInitDiv">
+                <input id="nick" maxlength="10"/><input id="color" type="color">
+            </div>
+        </div>
+        
+        <script>
+            var nick;
+            var color;
+            var socket;
+            $(function() {
+                $( "#dialogInit" ).dialog({
+                  resizable: false,
+                  modal: true,
+                  autoOpen: false,
+                  buttons: {
+                    "Valider": function() {
+                        $( this ).dialog( "close" );
+                        init();
+                    },
+                    Cancel: function() {
+                      $( this ).dialog( "close" );
+                    }
+                  }
+                });
+                
+                socket = io.connect('http://localhost:8080');
+                if(socket != null)
+                    $( "#dialogInit" ).dialog("open");
+                
+                socket.on('refresh', function(data) {
+                    //TODO : Refresh
+                });
+
+                socket.on('newPlayer', function(data) {
+                    console.log(data);
+                    $('#listPlayers').html("");
+                    $.each(data.players, function(k, v){
+                       $('#listPlayers').append('<li style="color:'+v.color+'">'+v.nick+'</li>');
+                    });
+                });
+            });
+            
+            
+            var init = function(){
+                nick = $("#nick").val();
+                color = $("#color").val();
+                $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
+
+                socket.emit('newPlayer', {nick : nick, color : color});
+                document.title = nick + ' - ' + document.title;
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+{ 
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true
+    },
+    "files": [
+        "src/public/models.ts",
+        "src/public/controller.ts",
+        "src/public/view.ts",
+        "src/public/interaction.ts",
+        "src/server.ts",
+        "src/routes.ts",
+        "src/models.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

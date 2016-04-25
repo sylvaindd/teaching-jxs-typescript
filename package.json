@@ -2,14 +2,22 @@
   "name": "snake",
   "version": "1.0.0",
   "description": "Snake in Typescript",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
+    "browserify": "^13.0.0",
     "ent": "^2.2.0",
     "express": "~3.3.4",
+    "gulp-clean": "^0.3.2",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-shell": "^0.5.2",
+    "gulp-typescript": "^2.13.0",
     "nodejs": "0.0.0",
-    "socket.io": "~1.2.1"
+    "run-sequence": "^1.1.5",
+    "socket.io": "~1.2.1",
+    "tsify": "^0.15.2",
+    "typescript": "^1.8.10",
+    "ws": "^1.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

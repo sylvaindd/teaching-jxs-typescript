@@ -1,0 +1,26 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "Snake in Typescript",
+  "main": "index.js",
+  "dependencies": {
+    "ent": "^2.2.0",
+    "express": "~3.3.4",
+    "nodejs": "0.0.0",
+    "socket.io": "~1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvaindd/teaching-jxs-typescript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sylvaindd/teaching-jxs-typescript/issues"
+  },
+  "homepage": "https://github.com/sylvaindd/teaching-jxs-typescript#readme"
+}

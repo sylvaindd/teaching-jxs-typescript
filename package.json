@@ -4,7 +4,6 @@
   "description": "Snake in Typescript",
   "main": "server.js",
   "dependencies": {
-    "browserify": "^13.0.0",
     "ent": "^2.2.0",
     "express": "~3.3.4",
     "gulp-clean": "^0.3.2",
@@ -14,7 +13,6 @@
     "nodejs": "0.0.0",
     "run-sequence": "^1.1.5",
     "socket.io": "~1.2.1",
-    "tsify": "^0.15.2",
     "typescript": "^1.8.10",
     "ws": "^1.1.0"
   },

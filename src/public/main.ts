@@ -8,7 +8,6 @@ import {Player} from "./models"
 const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
 const game: Game;
-//game.start();
 
 var nick;
 var color;

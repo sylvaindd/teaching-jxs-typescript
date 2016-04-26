@@ -12,6 +12,13 @@ export class SnakePart{
     pos(): string{
         return this.x + "-" + this.y;
     }
+
+    draw (ctx)
+    {
+        ctx.lineWidth = 5;
+        ctx.fillRect(this.x,this.y,5,5);
+        ctx.stroke();
+    }
 }
 
 export class Snake {
@@ -35,6 +42,14 @@ export class Snake {
         }
     }
 
+    draw (ctx)
+    {
+        for (let point of this.coords)
+        {
+            point.draw(ctx);
+        }
+    }
+
     getHead(): SnakePart{
         return this.coords[0];
     }
@@ -53,6 +68,14 @@ export class Players {
     
     constructor() {
         this.players = new Array<Player>();
+    }
+
+    draw (ctx)
+    {
+        for (let player of this.players)
+        {
+            player.draw(ctx);
+        }
     }
 
     addPlayer(player: Player): void{
@@ -103,7 +126,7 @@ export class Player {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
-        this.snake = new Snake(3, new SnakePart(20,5));
+        this.snake = new Snake(3, new SnakePart(20,100));
     }
 
     getCoords(): Array<SnakePart>{
@@ -111,6 +134,13 @@ export class Player {
     }
     getSnake() : Snake{
         return this.snake;
+    }
+
+    draw (ctx)
+    {
+        ctx.beginPath();
+	    ctx.strokeStyle = this.color;
+        this.snake.draw(ctx);
     }
 }
 

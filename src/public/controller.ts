@@ -20,7 +20,6 @@ export class Game extends Interactor{
         this.players = new Array();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
-        this.start();
     }
 
     onArrowkeyPressed(movement: Movement): void{
@@ -37,7 +36,6 @@ export class Game extends Interactor{
          */
     start() {
     // TODO : initialize game
-
         this.animate(); // Start animation
     }
 
@@ -64,14 +62,14 @@ export class Game extends Interactor{
         animationLoop();
     }
 
-    /**
+        /**
          * Update status of game and view
          */
     update() {
     // TODO
         switch (this.playerMoi.getSnake().lastKey) {
                 case Key.Up:
-                    $.each(this.playerMoi.getCoords(),function(key,val){
+    $.each(this.playerMoi.getCoords(),function(key,val){
                     //déplacer chaque snake part de son suivant
 
                         if(key==0){
@@ -128,8 +126,9 @@ export class Game extends Interactor{
 
                     });
                     break;
+
         }
-        console.log("update")
+        console.log("update");
     }
 
 }

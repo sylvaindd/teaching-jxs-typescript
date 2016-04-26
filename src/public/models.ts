@@ -82,9 +82,12 @@ export class Players {
 
     draw (ctx, canvas)
     {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
+	    ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
         for (let player of this.players)
         {
-            player.draw(ctx, canvas);
+            player.draw(ctx);
         }
     }
 
@@ -155,11 +158,8 @@ export class Player {
         return this.snake;
     }
 
-    draw (ctx, canvas)
+    draw (ctx)
     {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
-	    ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
         ctx.beginPath();
 	    ctx.strokeStyle = this.color;
         this.snake.draw(ctx);

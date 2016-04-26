@@ -37,8 +37,7 @@ $(function() {
 
 
     socket.on('newPlayer', function(data) {
-        data = JSON.parse(data);
-        console.log(data);
+        data = JSON.parse(data.players);
         refreshListPlayers(data.players);
     });
 
@@ -67,6 +66,7 @@ var refreshListPlayers = function(players){
     $('#listPlayers').html("");
     game.players = new Array<Player>();
     $.each(players, function(k, v){
+        v = v.player;
         game.players.push(new Player(v.nick, v.color, v.ID));
         $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
     });

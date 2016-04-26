@@ -68,7 +68,7 @@ export class Snake {
         for(let v of this.coords){
            json += "'"+v.pos()+"',";
         }
-        json += "]";
+        json = json.substring(0, json.length - 2) + "]";
         return json;
     }
 }
@@ -101,11 +101,11 @@ export class Players {
     }
     
     serialize(): string{
-        let json: string = "{players:[";
+        let json: string = "{\"players\":[";
         for(let v of this.players){
-            json += v.serialize();
+            json += v.serialize() + ",";
         }
-        json += "]}";
+        json = json.substring(0, json.length - 2) + "]}";
         return json;
     }
 
@@ -166,7 +166,7 @@ export class Player {
     }
 
     serialize(): string{
-        return "{player : {nick : '" + this.nick + "', color : '" + this.color + "', ID : '" + this.ID + "', snake : {coords : " + this.snake.jsonPos() + "}}}";
+        return '{"player" : {"nick" : "' + this.nick + '" , "color" : "' + this.color + '", "ID" : "' + this.ID + '", "snake" : {"coords" : "' + this.snake.jsonPos() + '"}}}';
     }
 }
 

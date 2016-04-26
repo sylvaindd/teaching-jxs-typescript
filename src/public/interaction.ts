@@ -11,7 +11,7 @@ export class Movement {
         this.ctx = canvas.getContext('2d');
         this.interactor = interactor;
 
-        $(canvas).keydown(this.arrowKeysPressed.bind(this));
+        $(document).keydown(this.arrowKeysPressed.bind(this));
     }
 
     arrowKeysPressed(e){

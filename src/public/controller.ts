@@ -5,6 +5,7 @@ import {Movement} from "./interaction";
 
 export class Game {
     players: Array<Player>;
+    playerMoi : Player;
     canvasContext : CanvasRenderingContext2D;
     gridWidth : number;
     gridHeight : number;
@@ -21,7 +22,11 @@ constructor(public canvas : HTMLCanvasElement, public speed : number, public gri
 
 onArrowkeyPressed(movement: Movement): void{
     movement.key;
-    playerMoi.snake.lastKey = movement.key;
+    this.playerMoi.snake.lastKey = movement.key;
+}
+
+setPlayerMoi(pl: Player): void{
+    this.playerMoi = pl;
 }
 
 /**
@@ -63,19 +68,19 @@ if (delta > interval) {
      */
 update() {
 // TODO
-    switch (playerMoi.snake.lastKey) {
+    switch (this.playerMoi.snake.lastKey) {
             case Key.up:
 
 
-$.each(playerMoi.snake.coords,function(key,val){
+$.each(this.playerMoi.snake.coords,function(key,val){
 //déplacer chaque snake part de son suivant
 
 if(key==0){
     val.x = val.x;
     val.y = val.y-1;
 }else{
-    val.x = playerMoi.snake.coords[key-1];
-    val.y = playerMoi.snake.coords[key-1];
+    val.x = this.playerMoi.snake.coords[key-1];
+    val.y = this.playerMoi.snake.coords[key-1];
 }
 
                 });
@@ -83,15 +88,15 @@ if(key==0){
 
                 break;
             case Key.down:
-$.each(playerMoi.snake.coords,function(key,val){
+$.each(this.playerMoi.snake.coords,function(key,val){
 //déplacer chaque snake part de son suivant
 
 if(key==0){
     val.x = val.x;
     val.y = val.y+1;
 }else{
-    val.x = playerMoi.snake.coords[key-1];
-    val.y = playerMoi.snake.coords[key-1];
+    val.x = this.playerMoi.snake.coords[key-1];
+    val.y = this.playerMoi.snake.coords[key-1];
 }
 
                 });
@@ -111,15 +116,15 @@ if(key==0){
                 });
                 break;
             case Key.left:
-$.each(playerMoi.snake.coords,function(key,val){
+$.each(this.playerMoi.snake.coords,function(key,val){
 //déplacer chaque snake part de son suivant
 
 if(key==0){
     val.x = val.x-1;
     val.y = val.y;
 }else{
-    val.x = playerMoi.snake.coords[key-1];
-    val.y = playerMoi.snake.coords[key-1];
+    val.x = this.playerMoi.snake.coords[key-1];
+    val.y = this.playerMoi.snake.coords[key-1];
 }
 
                 });

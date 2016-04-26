@@ -14,13 +14,15 @@ require('./routes')(app);
 var players: Players = new Players();
 var IDs:number = 0;
 
-io.sockets.on('connection', function (socket, player) {
+io.sockets.on('connection', function (socket) {
     
     socket.on('newPlayer', function(data) {
         socket.player = new Player(data.nick, data.color, IDs++);
+        socket.player.socket = socket;
         
         players.addPlayer(socket.player);
         
+        socket.emit('MyPlayer', {nick : socket.player.nick, color : socket.player.color, ID : socket.player.ID});
         io.sockets.emit('newPlayer', {players : players.array()});
     });
 

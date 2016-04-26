@@ -74,16 +74,16 @@ export class Game extends Interactor{
         let nbCaseToDelete:number =5
         switch (player.getSnake().lastKey) {
                 case Key.Up:
-                    player.getCoords().push(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
                     break;
                 case Key.Down:
-                    player.getCoords().push(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
                     break;
                 case Key.Right:
-                    player.getCoords().push(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
                     break;
                 case Key.Left:
-                     player.getCoords().push(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
+                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
                     break;
             }
 

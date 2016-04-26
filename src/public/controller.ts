@@ -70,62 +70,60 @@ update() {
 // TODO
     switch (this.playerMoi.snake.lastKey) {
             case Key.Up:
+                $.each(this.playerMoi.snake.coords,function(key,val){
+                //déplacer chaque snake part de son suivant
 
-
-$.each(this.playerMoi.snake.coords,function(key,val){
-//déplacer chaque snake part de son suivant
-
-if(key==0){
-    val.x = val.x;
-    val.y = val.y-1;
-}else{
-    val.x = this.playerMoi.snake.coords[key-1];
-    val.y = this.playerMoi.snake.coords[key-1];
-}
+                    if(key==0){
+                        val.x = val.x;
+                        val.y = val.y-1;
+                    }else{
+                        val.x = this.playerMoi.snake.coords[key-1];
+                        val.y = this.playerMoi.snake.coords[key-1];
+                    }
 
                 });
 
 
                 break;
             case Key.Down:
-$.each(this.playerMoi.snake.coords,function(key,val){
-//déplacer chaque snake part de son suivant
+                $.each(this.playerMoi.snake.coords,function(key,val){
+                //déplacer chaque snake part de son suivant
 
-if(key==0){
-    val.x = val.x;
-    val.y = val.y+1;
-}else{
-    val.x = this.playerMoi.snake.coords[key-1];
-    val.y = this.playerMoi.snake.coords[key-1];
-}
+                    if(key==0){
+                        val.x = val.x;
+                        val.y = val.y+1;
+                    }else{
+                        val.x = this.playerMoi.snake.coords[key-1];
+                        val.y = this.playerMoi.snake.coords[key-1];
+                    }
 
                 });
                 break;
             case Key.Right:
-$.each(this.playerMoi.snake.coords,function(key,val){
-//déplacer chaque snake part de son suivant
+                $.each(this.playerMoi.snake.coords,function(key,val){
+                //déplacer chaque snake part de son suivant
 
-if(key==0){
-    val.x = val.x+1;
-    val.y = val.y;
-}else{
-    val.x = this.playerMoi.snake.coords[key-1];
-    val.y = this.playerMoi.snake.coords[key-1];
-}
+                    if(key==0){
+                        val.x = val.x+1;
+                        val.y = val.y;
+                    }else{
+                        val.x = this.playerMoi.snake.coords[key-1];
+                        val.y = this.playerMoi.snake.coords[key-1];
+                    }
 
                 });
                 break;
             case Key.Left:
-$.each(this.playerMoi.snake.coords,function(key,val){
-//déplacer chaque snake part de son suivant
+                $.each(this.playerMoi.snake.coords,function(key,val){
+                //déplacer chaque snake part de son suivant
 
-if(key==0){
-    val.x = val.x-1;
-    val.y = val.y;
-}else{
-    val.x = this.playerMoi.snake.coords[key-1];
-    val.y = this.playerMoi.snake.coords[key-1];
-}
+                    if(key==0){
+                        val.x = val.x-1;
+                        val.y = val.y;
+                    }else{
+                        val.x = this.playerMoi.snake.coords[key-1];
+                        val.y = this.playerMoi.snake.coords[key-1];
+                    }
 
                 });
                 break;

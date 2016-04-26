@@ -1,10 +1,25 @@
 import {Movement} from "./interaction";
 
-export class Snake {
-    coords: Array<number | number>;
+export class SnakePart{
+    x: number;
+    y: number;
+    constructor (x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
-    constructor() {
+export class Snake {
+    coords: Array<SnakePart>;
+
+constructor(lenght:number) {
         this.coords = new Array();
+    init(lenght);
+    }
+
+    init(lenght:number, startPoint: SnakePart)
+    {
+        this.push()
     }
 }
 

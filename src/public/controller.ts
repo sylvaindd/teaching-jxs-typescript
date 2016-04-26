@@ -71,7 +71,7 @@ if (delta > interval) {
      */
 update() {
 // TODO
-    switch (this.playerMoi.snake.lastKey) {
+    switch (this.playerMoi.getSnake().lastKey) {
             case Key.Up:
 $.each(this.playerMoi.getCoords(),function(key,val){
                 //déplacer chaque snake part de son suivant

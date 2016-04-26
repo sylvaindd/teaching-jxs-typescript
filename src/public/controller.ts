@@ -24,7 +24,7 @@ export class Game extends Interactor{
     }
 
     onArrowkeyPressed(movement: Movement): void{
-if(this.playerMoi.lastKey == Key.Up && movement.key == Key.Down || this.playerMoi.lastKey == Key.Down && movement.key == Key.Up || this.playerMoi.lastKey == Key.Right && movement.key == Key.Left || this.playerMoi.lastKey == Key.Left && movement.key == Key.Right){return;}
+    if(this.playerMoi.getSnake().lastKey == Key.Up && movement.key == Key.Down || this.playerMoi.getSnake().lastKey == Key.Down && movement.key == Key.Up || this.playerMoi.getSnake().lastKey == Key.Right && movement.key == Key.Left || this.playerMoi.getSnake().lastKey == Key.Left && movement.key == Key.Right){return;}
         movement.key;
         this.playerMoi.snake.lastKey = movement.key;
     }

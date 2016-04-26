@@ -30,15 +30,17 @@ $(function() {
     });
 
     socket = io.connect('http://localhost:8080');
-    game.socket = socket;
+    game.addSocket(socket);
 
     if(socket != null)
         $( "#dialogInit" ).dialog("open");
 
 
     socket.on('newPlayer', function(data) {
+      if(data.players.length > 0){
         data = JSON.parse(data.players);
         refreshListPlayers(data.players);
+      }
     });
 
     socket.on('MyPlayer', function(data) {

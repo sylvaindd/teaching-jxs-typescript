@@ -9,7 +9,7 @@ export class SnakePart{
         this.y = y;
     }
 
-    pos(): string{
+    posString(): string{
         return this.x + "-" + this.y;
     }
 
@@ -50,19 +50,31 @@ export class Snake {
         }
         let lastPoint:SnakePart = this.coords[this.coords.length-1];
         ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
-	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
+        ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
         this.coords.pop();
+    }
+
+    deserializeCoords(coords: Array<String>): void{
+      this.coords = new Array<SnakePart>();
+      for(let v of coords){
+        let c = v.split("-");
+        this.coords.push(new SnakePart(c[0], c[1]));
+      }
     }
 
     getHead(): SnakePart{
         return this.coords[0];
     }
 
+    getHeadPos(): string{
+        return this.coords[0].posString();
+    }
+
     arrayPos(): Array<string>{
         var arrayPos = new Array<string>();
 
         for(let v of this.coords){
-            arrayPos.push(v.pos());
+            arrayPos.push(v.posString());
         }
         return arrayPos;
     }
@@ -70,7 +82,7 @@ export class Snake {
     jsonPos(): string{
         var json: string = "[";
         for(let v of this.coords){
-           json += "'"+v.pos()+"',";
+           json += "'"+v.posString()+"',";
         }
         json = json.substring(0, json.length - 1) + "]";
         return json;
@@ -79,7 +91,7 @@ export class Snake {
 
 export class Players {
     players: Array<Player>;
-    
+
     constructor() {
         this.players = new Array<Player>();
     }
@@ -95,15 +107,15 @@ export class Players {
     addPlayer(player: Player): void{
         this.players.push(player);
     }
-    
+
     toJson(): string{
         return JSON.stringify(this.players);
     }
-    
+
     array(): Array<Player>{
         return this.players.slice();
     }
-    
+
     serialize(): string{
         let json: string = "{\"players\":[";
         for(let v of this.players){
@@ -127,7 +139,7 @@ export class Players {
             this.players.splice(index, 1);
         }
     }
-    
+
     removePlayerByID(ID: number): void{
         $.each(this.players, function(k, v){
             if(v.ID == ID){
@@ -155,6 +167,11 @@ export class Player {
     getCoords(): Array<SnakePart>{
         return this.snake.coords;
     }
+
+    deserializeCoords(coords: Array<String>): void{
+      this.snake.deserializeCoords(coords);
+    }
+
     getSnake(): Snake{
         return this.snake;
     }
@@ -162,7 +179,7 @@ export class Player {
     draw (ctx)
     {
         ctx.beginPath();
-	    ctx.strokeStyle = this.color;
+	      ctx.strokeStyle = this.color;
         this.snake.draw(ctx);
     }
 
@@ -172,16 +189,16 @@ export class Player {
 }
 
 export abstract class Interactor {
-    
+
     constructor(public canvas: HTMLCanvasElement) {
     }
-    
+
     abstract onArrowkeyPressed(movement: Movement): void;
 }
 
 export enum Key {
-    Left, 
-    Up, 
-    Right, 
+    Left,
+    Up,
+    Right,
     Down
 }

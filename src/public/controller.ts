@@ -22,10 +22,22 @@ export class Game extends Interactor{
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
 
+    }
 
-        this.socket.on('refresh', function(data){
-
-        });
+    addSocket(socket): void{
+      this.socket = socket;
+      this.socket.on('refresh', function(data){
+        data = JSON.parse(data.players);
+        for(let v of data.players){
+          v = v.player;
+           if(this.playerMoi.ID != v.ID){
+              var coords = v.snake.coords;
+              coords = coords.replace(/'/g, '"');
+              coords = JSON.parse(coords);
+              this.players.getByID(v.ID).deserializeCoords(coords);
+            }
+          }
+      }.bind(this));
     }
 
     onArrowkeyPressed(movement: Movement): void{
@@ -72,27 +84,25 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
-
-    for(let player of this.players.players){
-        let i:number =0;
         let nbCaseToDelete:number =5
+        let player = this.players.getByID(this.playerMoi.ID);
         switch (player.getSnake().lastKey) {
             case Key.Up:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-nbCaseToDelete));
                 break;
             case Key.Down:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+nbCaseToDelete));
                 break;
             case Key.Right:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete, player.getCoords()[0].y));
                 break;
             case Key.Left:
-                 player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete, player.getCoords()[0].y));
                 break;
-            }
         }
-        console.log(this.playerMoi.snake.coords);
+        //console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);
+        this.socket.emit('refresh', player.serialize());
     }
 
 }

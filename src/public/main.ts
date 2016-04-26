@@ -2,11 +2,13 @@
 /// <reference path="../../declarations/io.d.ts" />
 
 import {Game} from "./controller"
+import {Player} from "./models"
 
 const canvas = <HTMLCanvasElement> document.getElementById("snakeGame");
 const speed = 10;
 const game = new Game(canvas, speed);
 //game.start();
+var playerMoi: Player;
 
 var nick;
 var color;
@@ -48,6 +50,7 @@ $(function() {
 var init = function(){
     nick = $("#nick").val();
     color = $("#color").val();
+    playerMoi = new Player(nick, color);
     $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
 
     socket.emit('newPlayer', {nick : nick, color : color});

@@ -86,7 +86,7 @@ export class Game extends Interactor{
     update() {
         let nbCaseToDelete:number =5
         let player = this.players.getByID(this.playerMoi.ID);
-        switch (player.getSnake().lastKey) {
+        switch (this.playerMoi.getSnake().lastKey) {
             case Key.Up:
                 player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-nbCaseToDelete));
                 break;

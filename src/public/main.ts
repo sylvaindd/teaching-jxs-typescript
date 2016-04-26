@@ -44,12 +44,10 @@ $(function() {
     });
 
     socket.on('MyPlayer', function(data) {
-        console.log(data);
-
-        $.each(game.players.players, function(k, v){
+        for(let v of game.players.players){
             if(v.ID == data.ID)
                 playerMoi = v;
-        });
+        }
         game.setPlayerMoi(playerMoi);
     });
 
@@ -64,14 +62,13 @@ $("#start").click(function(){
 });
 
 var refreshListPlayers = function(players){
-    console.log(players);
     $('#listPlayers').html("");
     game.players.players = new Array<Player>();
-    $.each(players, function(k, v){
+    for(let v of players){
         v = v.player;
         game.players.players.push(new Player(v.nick, v.color, v.ID));
         $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
-    });
+    }
 }
 
 var init = function(){

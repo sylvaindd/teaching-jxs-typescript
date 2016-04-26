@@ -71,62 +71,23 @@ export class Game extends Interactor{
     for(let player of this.players.players){
          console.log("update"+player.nick);
         let i:number =0;
+        let nbCaseToDelete:number =5
         switch (player.getSnake().lastKey) {
             case Key.Up:
-                i=0;
-                    for (let val of player.getCoords()){
-                    if(i==0){
-                        val.x = val.x;
-                        val.y = val.y-5;
-                    }else{
-                        val.x = player.getCoords()[i-1].x;
-                        val.y = player.getCoords()[i-1].y;
-                    }
-                    i++;
-                };
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
                 break;
             case Key.Down:
-                i=0;
-                 for (let val of player.getCoords()){
-                    if(i==0){
-                        val.x = val.x;
-                        val.y = val.y+5;
-                    }else{
-                        val.x = player.getCoords()[i-1].x;
-                        val.y = player.getCoords()[i-1].y;
-                    }
-                    i++;
-                };
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
                 break;
             case Key.Right:
-                i=0;
-                for (let val of player.getCoords()){
-                    if(i==0){
-                        val.x = val.x+5;
-                        val.y = val.y;
-                    }else{
-                        val.x = player.getCoords()[i-1].x;
-                        val.y = player.getCoords()[i-1].y;
-                    }
-                    i++;
-                };
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
                 break;
             case Key.Left:
-                i=0;
-                 for (let val of player.getCoords()){
-                    if(i==0){
-                        val.x = val.x-5;
-                        val.y = val.y;
-                    }else{
-                        val.x = player.getCoords()[i-1].x;
-                        val.y = player.getCoords()[i-1].y;
-                    }
-                    i++;
-                };
+                 player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
                 break;
             }
         }
-        this.players.draw(this.canvasContext, this.canvas);
+        this.players.draw(this.canvasContext);
     }
 
 }

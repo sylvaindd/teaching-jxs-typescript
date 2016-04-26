@@ -88,7 +88,7 @@ export class Game extends Interactor{
             }
 
         }
-        this.players.draw(this.canvasContext, this.canvas);
+        this.players.draw(this.canvasContext);
     }
 
 }

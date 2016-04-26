@@ -67,6 +67,14 @@ export class Players {
         return this.players.slice();
     }
     
+    getByID(ID: number){
+        $.each(this.players, function(k, v){
+            if(v.ID == ID)
+                return v;
+        });
+        return null;
+    }
+
     removePlayer(player: Player): void{
         var index: number = this.players.indexOf(player);
         if (index > -1) {
@@ -74,16 +82,33 @@ export class Players {
         }
     }
     
+    removePlayerByID(ID: number): void{
+        $.each(this.players, function(k, v){
+            if(v.ID == ID){
+                this.players.splice(k, 1);
+                return;
+            }
+        });
+    }
 }
 
 export class Player {
     nick: string;
     color: number;
     snake: Snake;
+    socket;
+    ID: number;
     
     constructor(nick: string, color: number) {
         this.nick = nick;
         this.color = color;
+        this.snake = new Snake(3, new SnakePart(20,5));
+    }
+
+    constructor(nick: string, color: number, ID: number) {
+        this.nick = nick;
+        this.color = color;
+        this.ID = ID;
         this.snake = new Snake(3, new SnakePart(20,5));
     }
 

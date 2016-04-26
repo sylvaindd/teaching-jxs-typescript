@@ -29,9 +29,23 @@ export class Players {
 export class Player {
     nick: string;
     color: number;
+    snake: Snake;
 
     constructor(nick: string, color: number) {
         this.nick = nick;
         this.color = color;
+        this.snake = new Snake();
+    }
+
+    getCoords(): Array<number | number>{
+        return this.snake.coords;
+    }
+}
+
+export class Snake {
+    coords: Array<number | number>;
+
+    constructor() {
+        this.coords = new Array();
     }
 }

@@ -1,9 +1,7 @@
 class Snake {
-    player: Player;
     coords: Array<number | number>;
 
-    constructor(nick: string, color: number) {
-        this.player = new Player(nick, color);
+    constructor() {
         this.coords = new Array();
     }
 }
@@ -14,7 +12,7 @@ class Players {
     constructor() {
         this.players = new Array<Player>();
     }
-    
+
     addPlayer(player: Player): void{
         this.players.push(player);
     }
@@ -39,10 +37,16 @@ class Players {
 class Player {
     nick: string;
     color: number;
+    snake: Snake;
     
     constructor(nick: string, color: number) {
         this.nick = nick;
         this.color = color;
+        this.snake = new Snake();
+    }
+
+    getCoords(): Array<number | number>{
+        return this.snake.coords;
     }
 }
 

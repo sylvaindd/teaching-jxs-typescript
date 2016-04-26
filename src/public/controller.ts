@@ -80,8 +80,8 @@ $.each(this.playerMoi.getCoords(),function(key,val){
                         val.x = val.x;
                         val.y = val.y-1;
                     }else{
-                        val.x = this.playerMoi.getCoords()[key-1];
-                        val.y = this.playerMoi.getCoords()[key-1];
+                        val.x = this.playerMoi.getCoords()[val.x-1];
+                        val.y = this.playerMoi.getCoords()[val.y-1];
                     }
 
                 });
@@ -96,8 +96,8 @@ $.each(this.playerMoi.getCoords(),function(key,val){
                         val.x = val.x;
                         val.y = val.y+1;
                     }else{
-                        val.x = this.playerMoi.getCoords()[key-1];
-                        val.y = this.playerMoi.getCoords()[key-1];
+                        val.x = this.playerMoi.getCoords()[val.x-1];
+                        val.y = this.playerMoi.getCoords()[val.y-1];
                     }
 
                 });
@@ -110,8 +110,8 @@ $.each(this.playerMoi.getCoords(),function(key,val){
                         val.x = val.x+1;
                         val.y = val.y;
                     }else{
-                        val.x = this.playerMoi.getCoords()[key-1];
-                        val.y = this.playerMoi.getCoords()[key-1];
+                        val.x = this.playerMoi.getCoords()[val.x-1];
+                        val.y = this.playerMoi.getCoords()[val.y-1];
                     }
 
                 });
@@ -124,8 +124,8 @@ $.each(this.playerMoi.getCoords(),function(key,val){
                         val.x = val.x-1;
                         val.y = val.y;
                     }else{
-                        val.x = this.playerMoi.getCoords()[key-1];
-                        val.y = this.playerMoi.getCoords()[key-1];
+                        val.x = this.playerMoi.getCoords()[val.x-1];
+                        val.y = this.playerMoi.getCoords()[val.y-1];
                     }
 
                 });

@@ -2,6 +2,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "module": "commonjs",
+        "moduleResolution":"node",
         "noImplicitAny": false,
         "removeComments": true,
         "preserveConstEnums": true,
@@ -17,6 +18,6 @@
         "src/models.ts"
     ],
     "exclude": [
-        "node_modules"
+        //"node_modules"
     ]
 }

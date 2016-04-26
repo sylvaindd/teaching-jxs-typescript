@@ -10,6 +10,14 @@ class Game extends Interactor {
     
     
     onArrowkeyPressed(movement: Movement): void{
-        movement.key
+movement.key;
+    //moveSnake(movement.key);
+
 	}
+
+   /* moveSnake(){
+    switch (key) :{
+    case  '53':
+    }
+    }*/
 }

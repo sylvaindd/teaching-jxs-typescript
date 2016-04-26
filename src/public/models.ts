@@ -1,3 +1,4 @@
+import * as Collections from 'node_modules/typescript-collections';
 class Snake {
     player: Player;
     coords: Array<number | number>;
@@ -5,6 +6,7 @@ class Snake {
     constructor(nick: string, color: number) {
         this.player = new Player(nick, color);
         this.coords = new Array();
+        var myQueue = new Collections.Queue();
     }
 }
 

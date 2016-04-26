@@ -13,6 +13,7 @@
     "run-sequence": "^1.1.5",
     "socket.io": "~1.2.1",
     "typescript": "^1.8.10",
+    "typescript-collections": "^1.1.2",
     "ws": "^1.1.0"
   },
   "scripts": {

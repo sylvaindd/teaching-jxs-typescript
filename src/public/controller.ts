@@ -67,7 +67,7 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
-    for(let player of this.players){
+    for(let player of this.players.players){
         let i:number =0;
         switch (player.getSnake().lastKey) {
                 case Key.Up:

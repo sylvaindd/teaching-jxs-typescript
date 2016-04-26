@@ -1,4 +1,5 @@
 /// <reference path="../../declarations/jquery.d.ts" />
+/// <reference path="../../declarations/jquery.ui.d.ts" />
 /// <reference path="../../declarations/io.d.ts" />
 
 import {Game} from "./controller"

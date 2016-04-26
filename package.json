@@ -2,7 +2,7 @@
   "name": "snake",
   "version": "1.0.0",
   "description": "Snake in Typescript",
-  "main": "server.js",
+  "main": "dist/server.js",
   "dependencies": {
     "ent": "^2.2.0",
     "express": "~3.3.4",

@@ -1,7 +1,7 @@
 /// <reference path="../../declarations/jquery.d.ts" />
 
 import {Key, Interactor, SnakePart, Player, Players} from "./models";
-import {Key, Movement} from "./interaction";
+import {Movement} from "./interaction";
 
 export class Game extends Interactor{
     players: Players;
@@ -21,12 +21,16 @@ export class Game extends Interactor{
         this.players = new Players();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
+
+
+        this.socket.on('refresh', function(data){
+
+        });
     }
 
     onArrowkeyPressed(movement: Movement): void{
-    if(this.playerMoi.getSnake().lastKey == Key.Up && movement.key == Key.Down || this.playerMoi.getSnake().lastKey == Key.Down && movement.key == Key.Up || this.playerMoi.getSnake().lastKey == Key.Right && movement.key == Key.Left || this.playerMoi.getSnake().lastKey == Key.Left && movement.key == Key.Right){return;}
-        movement.key;
-        this.playerMoi.snake.lastKey = movement.key;
+      if(this.playerMoi.getSnake().lastKey == Key.Up && movement.key == Key.Down || this.playerMoi.getSnake().lastKey == Key.Down && movement.key == Key.Up || this.playerMoi.getSnake().lastKey == Key.Right && movement.key == Key.Left || this.playerMoi.getSnake().lastKey == Key.Left && movement.key == Key.Right){return;}
+      this.playerMoi.snake.lastKey = movement.key;
     }
 
     setPlayerMoi(pl: Player): void{
@@ -87,7 +91,7 @@ export class Game extends Interactor{
                 break;
             }
         }
-    console.log(this.playerMoi.snake.coords);
+        console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);
     }
 

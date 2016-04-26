@@ -155,7 +155,7 @@ export class Player {
         return this.snake;
     }
 
-    draw (ctx)
+    draw (ctx, canvas)
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color

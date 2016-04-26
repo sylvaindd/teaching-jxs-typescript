@@ -10,6 +10,7 @@ export class Game extends Interactor{
     gridWidth : number;
     gridHeight : number;
     movement : Movement;
+    socket;
 
     constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
         super(canvas);
@@ -75,7 +76,7 @@ let i:number =0;
 
                         if(i==0){
                             val.x = val.x;
-                            val.y = val.y-1;
+                            val.y = val.y-5;
                         }else{
                             val.x = this.playerMoi.getCoords()[i-1].x;
                             val.y = this.playerMoi.getCoords()[i-1].y;
@@ -93,12 +94,12 @@ let i:number =0;
 
                         if(i==0){
                             val.x = val.x;
-                            val.y = val.y+1;
+                            val.y = val.y+5;
                         }else{
                             val.x = this.playerMoi.getCoords()[i-1].x;
                             val.y = this.playerMoi.getCoords()[i-1].y;
                         }
-
+                        i++;
                     };
                     break;
                 case Key.Right:
@@ -107,7 +108,7 @@ let i:number =0;
                     //déplacer chaque snake part de son suivant
 
                         if(i==0){
-                            val.x = val.x+1;
+                            val.x = val.x+5;
                             val.y = val.y;
                         }else{
                             val.x = this.playerMoi.getCoords()[i-1].x;
@@ -122,7 +123,7 @@ let i:number =0;
                     //déplacer chaque snake part de son suivant
 
                         if(i==0){
-                            val.x = val.x-1;
+                            val.x = val.x-5;
                             val.y = val.y;
                         }else{
                             val.x = this.playerMoi.getCoords()[i-1].x;
@@ -133,7 +134,6 @@ let i:number =0;
                     break;
 
         }
-        console.log("update");
     this.playerMoi.draw(this.canvasContext);
     }
 

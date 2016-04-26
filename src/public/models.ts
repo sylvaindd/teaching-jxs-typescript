@@ -70,6 +70,14 @@ export class Players {
         this.players = new Array<Player>();
     }
 
+    draw (ctx)
+    {
+        for (let player of this.players)
+        {
+            player.draw(ctx);
+        }
+    }
+
     addPlayer(player: Player): void{
         this.players.push(player);
     }

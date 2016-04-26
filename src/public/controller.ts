@@ -86,6 +86,7 @@ export class Game extends Interactor{
                 break;
             }
         }
+    console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);
     }
 

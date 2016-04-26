@@ -80,11 +80,11 @@ export class Players {
         this.players = new Array<Player>();
     }
 
-    draw (ctx)
+    draw (ctx, canvas)
     {
         for (let player of this.players)
         {
-            player.draw(ctx);
+            player.draw(ctx, canvas);
         }
     }
 

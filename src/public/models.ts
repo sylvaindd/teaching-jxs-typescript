@@ -10,16 +10,13 @@ export class SnakePart{
 }
 
 export class Snake {
-<<<<<<< HEAD
     coords: Array<SnakePart>;
-=======
-    coords: Array<number | number>;
     lastKey: number;
->>>>>>> 98c299a4cf1ffc661c830fc318687b7e4b3c4a36
+    startPoint: SnakePart
 
-constructor(lenght:number) {
+constructor(lenght:number, startPoint:number) {
         this.coords = new Array();
-    init(lenght);
+        init(lenght, startPoint);
     }
 
     init(lenght:number, startPoint: SnakePart)

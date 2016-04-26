@@ -22,7 +22,12 @@ export class Snake {
 
     init(lenght:number, startPoint: SnakePart)
     {
-        this.push()
+        this.coords.push(startPoint);
+        for(let i:number = 1 ; i < lenght ; i++)
+        {
+            let point:SnakePart = new SnakePart(startPoint.x-5*i,startPoint.y);
+            this.coords.push(point);
+        }
     }
 }
 

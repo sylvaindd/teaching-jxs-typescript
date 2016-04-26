@@ -34,6 +34,10 @@ export class Snake {
         }
     }
 
+    getHead(): SnakePart{
+        return this.coords[0];
+    }
+
     arrayPos(): Array<string>{
         var arrayPos = new Array<string>();
         $.each(this.coords, function(k, v){

@@ -1,6 +1,6 @@
 /// <reference path="../../declarations/jquery.d.ts" />
 
-import {Key, Interactor, Player} from "./models";
+import {Key, Interactor, SnakePart, Player} from "./models";
 import {Movement} from "./interaction";
 
 export class Game extends Interactor{
@@ -67,69 +67,74 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
-    // TODO
+let i:number =0;
         switch (this.playerMoi.getSnake().lastKey) {
                 case Key.Up:
-    $.each(this.playerMoi.getCoords(),function(key,val){
+                    i=0;
+                        for (let val of this.playerMoi.getCoords()){
                     //déplacer chaque snake part de son suivant
 
-                        if(key==0){
+                        if(i==0){
                             val.x = val.x;
-                            val.y = val.y-1;
+                            val.y = val.y-5;
                         }else{
-                            val.x = this.playerMoi.getCoords()[key-1];
-                            val.y = this.playerMoi.getCoords()[key-1];
+                            val.x = this.playerMoi.getCoords()[i-1].x;
+                            val.y = this.playerMoi.getCoords()[i-1].y;
                         }
+                            i++;
 
-                    });
+                    };
 
 
                     break;
                 case Key.Down:
-                    $.each(this.playerMoi.getCoords(),function(key,val){
+                    i=0;
+                     for (let val of this.playerMoi.getCoords()){
                     //déplacer chaque snake part de son suivant
 
-                        if(key==0){
+                        if(i==0){
                             val.x = val.x;
-                            val.y = val.y+1;
+                            val.y = val.y+5;
                         }else{
-                            val.x = this.playerMoi.getCoords()[key-1];
-                            val.y = this.playerMoi.getCoords()[key-1];
+                            val.x = this.playerMoi.getCoords()[i-1].x;
+                            val.y = this.playerMoi.getCoords()[i-1].y;
                         }
-
-                    });
+                        i++;
+                    };
                     break;
                 case Key.Right:
-                    $.each(this.playerMoi.getCoords(),function(key,val){
+                    i=0;
+                     for (let val of this.playerMoi.getCoords()){
                     //déplacer chaque snake part de son suivant
 
-                        if(key==0){
-                            val.x = val.x+1;
+                        if(i==0){
+                            val.x = val.x+5;
                             val.y = val.y;
                         }else{
-                            val.x = this.playerMoi.getCoords()[key-1];
-                            val.y = this.playerMoi.getCoords()[key-1];
+                            val.x = this.playerMoi.getCoords()[i-1].x;
+                            val.y = this.playerMoi.getCoords()[i-1].y;
                         }
 
-                    });
+                    };
                     break;
                 case Key.Left:
-                    $.each(this.playerMoi.getCoords(),function(key,val){
+                    i=0;
+                     for (let val of this.playerMoi.getCoords()){
                     //déplacer chaque snake part de son suivant
 
-                        if(key==0){
-                            val.x = val.x-1;
+                        if(i==0){
+                            val.x = val.x-5;
                             val.y = val.y;
                         }else{
-                            val.x = this.playerMoi.getCoords()[key-1];
-                            val.y = this.playerMoi.getCoords()[key-1];
+                            val.x = this.playerMoi.getCoords()[i-1].x;
+                            val.y = this.playerMoi.getCoords()[i-1].y;
                         }
 
-                    });
+                    };
                     break;
 
         }
-        console.log("update");
+    this.playerMoi.draw(this.canvasContext);
     }
 
 }

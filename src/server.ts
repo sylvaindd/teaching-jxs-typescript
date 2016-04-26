@@ -39,10 +39,14 @@ var checkDetection = function(){
     $.each(players, function(k, v){
         $.each(players, function(k2, v2){
             if(v2.arrayPos().indexOf(v.snake.getHead()) > -1){
-
+                gameOver(v);
             }
         });
     });
+}
+
+var gameOver = function(player: Player){
+    player.socket.broadcast.emit('gameOver', {player : player.ID});
 }
 
 

@@ -1,10 +1,10 @@
 /// <reference path="../../declarations/jquery.d.ts" />
 
-import {Key, Interactor, SnakePart, Player} from "./models";
+import {Key, Interactor, SnakePart, Player, Players} from "./models";
 import {Movement} from "./interaction";
 
 export class Game extends Interactor{
-    players: Array<Player>;
+    players: Players;
     playerMoi : Player;
     canvasContext : CanvasRenderingContext2D;
     gridWidth : number;
@@ -18,7 +18,7 @@ export class Game extends Interactor{
         this.gridHeight = canvas.height / gridSize;
         this.canvasContext = canvas.getContext("2d");
 
-        this.players = new Array();
+        this.players = new Players();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
     }
@@ -67,19 +67,20 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
-let i:number =0;
-        switch (this.playerMoi.getSnake().lastKey) {
+    for(let player of this.players){
+        let i:number =0;
+        switch (player.getSnake().lastKey) {
                 case Key.Up:
                     i=0;
-                        for (let val of this.playerMoi.getCoords()){
+                        for (let val of player.getCoords()){
                     //déplacer chaque snake part de son suivant
 
                         if(i==0){
                             val.x = val.x;
                             val.y = val.y-5;
                         }else{
-                            val.x = this.playerMoi.getCoords()[i-1].x;
-                            val.y = this.playerMoi.getCoords()[i-1].y;
+                            val.x = player.getCoords()[i-1].x;
+                            val.y = player.getCoords()[i-1].y;
                         }
                             i++;
 
@@ -89,52 +90,54 @@ let i:number =0;
                     break;
                 case Key.Down:
                     i=0;
-                     for (let val of this.playerMoi.getCoords()){
+                     for (let val of player.getCoords()){
                     //déplacer chaque snake part de son suivant
 
                         if(i==0){
                             val.x = val.x;
                             val.y = val.y+5;
                         }else{
-                            val.x = this.playerMoi.getCoords()[i-1].x;
-                            val.y = this.playerMoi.getCoords()[i-1].y;
+                            val.x = player.getCoords()[i-1].x;
+                            val.y = player.getCoords()[i-1].y;
                         }
                         i++;
                     };
                     break;
                 case Key.Right:
                     i=0;
-                     for (let val of this.playerMoi.getCoords()){
+                     for (let val of player.getCoords()){
                     //déplacer chaque snake part de son suivant
 
                         if(i==0){
                             val.x = val.x+5;
                             val.y = val.y;
                         }else{
-                            val.x = this.playerMoi.getCoords()[i-1].x;
-                            val.y = this.playerMoi.getCoords()[i-1].y;
+                            val.x = player.getCoords()[i-1].x;
+                            val.y = player.getCoords()[i-1].y;
                         }
 
                     };
                     break;
                 case Key.Left:
                     i=0;
-                     for (let val of this.playerMoi.getCoords()){
+                     for (let val of player.getCoords()){
                     //déplacer chaque snake part de son suivant
 
                         if(i==0){
                             val.x = val.x-5;
                             val.y = val.y;
                         }else{
-                            val.x = this.playerMoi.getCoords()[i-1].x;
-                            val.y = this.playerMoi.getCoords()[i-1].y;
+                            val.x = player.getCoords()[i-1].x;
+                            val.y = player.getCoords()[i-1].y;
                         }
 
                     };
                     break;
 
         }
-    this.players.draw(this.canvasContext, this.canvas);
+
+        }
+        this.players.draw(this.canvasContext, this.canvas);
     }
 
 }

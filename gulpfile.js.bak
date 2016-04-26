@@ -1,0 +1,61 @@
+var gulp = require('gulp'),
+    runSequence = require('run-sequence'),
+    nodemon = require('gulp-nodemon'),
+    clean = require('gulp-clean'),
+    shell = require('gulp-shell'),
+    open = require('gulp-open');
+
+
+var paths = {
+    distAll : 'dist/*',
+    buildAll : 'build/*',
+    publicHTML : './src/public/**/*.html',
+    publicJS : './src/public/**/*.js',
+    publicImages : './src/public/images/**/*.*',
+    src : './src/',
+    dist : 'dist',
+    build : 'build',
+    buildJS : './build/**/*.js',
+    distSRC : 'dist/src/',
+    server : 'dist/src/server.js'
+};
+
+gulp.task('clean', function(){
+    return gulp.src([paths.distAll, paths.buildAll], {read:false})
+    .pipe(clean());
+});
+
+gulp.task('move', function(){
+    gulp.src([paths.publicHTML, paths.publicJS, paths.publicImages], { base: './' })
+    .pipe(gulp.dest(paths.dist));
+    return gulp.src([paths.buildJS], { base: paths.build })
+    .pipe(gulp.dest(paths.distSRC));
+});
+
+
+gulp.task('default', function () {
+    runSequence('build', 'node', 'open');
+});
+
+gulp.task('build', function () {
+    runSequence('clean', 'compile', 'move', 'watch');
+});
+
+gulp.task('node', function(){
+    nodemon({
+        script: paths.server
+        , ext: 'js html'
+        //, env: { 'NODE_ENV': 'development' }
+    });
+});
+
+gulp.task('watch', function(){
+    gulp.watch(paths.src, ['build'])
+});
+
+gulp.task('open', function(){
+    gulp.src(__filename)
+    .pipe(open({uri: 'http://localhost:8080'}));
+});
+
+gulp.task('compile', shell.task(['tsc']));

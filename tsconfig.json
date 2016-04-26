@@ -1,22 +1,14 @@
-{ 
-    "compileOnSave": true,
+{
     "compilerOptions": {
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "module": "commonjs",
         "noImplicitAny": false,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "sourceMap": true
+        "rootDir" : "src"
     },
-    "files": [
-        "src/public/models.ts",
-        "src/public/controller.ts",
-        "src/public/view.ts",
-        "src/public/interaction.ts",
-        "src/server.ts",
-        "src/routes.ts",
-        "src/models.ts"
-    ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist"
     ]
 }

@@ -20,7 +20,6 @@ export class Game extends Interactor{
         this.players = new Array();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
-        this.start();
     }
 
     onArrowkeyPressed(movement: Movement): void{

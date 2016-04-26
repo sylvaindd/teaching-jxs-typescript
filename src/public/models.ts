@@ -141,12 +141,13 @@ export class Players {
     }
 
     removePlayerByID(ID: number): void{
-        $.each(this.players, function(k, v){
-            if(v.ID == ID){
-                this.players.splice(k, 1);
-                return;
-            }
-        });
+      for(let i = 0; i < this.players.length; i++){
+        let v = this.players[i];
+        if(v.ID == ID){
+            this.players.splice(i, 1);
+            return;
+        }
+      }
     }
 }
 

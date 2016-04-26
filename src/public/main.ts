@@ -29,6 +29,13 @@ $(function() {
       }
     });
 
+    $("#nick").on('keypress', function (event) {
+      if(event.which === 13){
+          $("#dialogInit").dialog( "close" );
+          init();
+      }
+   });
+   
     socket = io.connect('http://localhost:8080');
     game.addSocket(socket);
 

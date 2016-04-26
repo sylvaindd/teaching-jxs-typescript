@@ -10,6 +10,7 @@ export class Game extends Interactor{
     gridWidth : number;
     gridHeight : number;
     movement : Movement;
+    isGameOver: boolean;
     socket;
 
     constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
@@ -17,6 +18,7 @@ export class Game extends Interactor{
         this.gridWidth = canvas.width / gridSize;
         this.gridHeight = canvas.height / gridSize;
         this.canvasContext = canvas.getContext("2d");
+        this.isGameOver = false;
 
         this.players = new Players();
         // TODO : listen to user interaction
@@ -37,6 +39,18 @@ export class Game extends Interactor{
               this.players.getByID(v.ID).deserializeCoords(coords);
             }
           }
+      }.bind(this));
+      this.socket.on('gameOver', function(data){
+        if(data.player.ID == this.playerMoi.ID){
+          this.gameOver();
+        }else{
+          this.players.removePlayerByID(data.player.ID);
+        }
+      }.bind(this));
+      this.socket.on('gameWin', function(data){
+        if(data.player.ID == this.playerMoi.ID){
+          this.gameWin();
+        }
       }.bind(this));
     }
 
@@ -103,6 +117,20 @@ export class Game extends Interactor{
         //console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);
         this.socket.emit('refresh', player.serialize());
+    }
+
+    gameOver(){
+      this.isGameOver = true;
+      $('div#gameOver').show('fast', function() {
+        $( this ).animate({top:250}, 'slow');
+      });
+    }
+
+    gameWin(){
+      this.isGameOver = true;
+      $('div#gameWin').show('fast', function() {
+        $( this ).animate({top:250}, 'slow');
+      });
     }
 
 }

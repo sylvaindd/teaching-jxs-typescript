@@ -32,8 +32,10 @@ io.sockets.on('connection', function (socket) {
           var coords = data.player.snake.coords;
           coords = coords.replace(/'/g, '"');
           coords = JSON.parse(coords);
-          players.getByID(data.player.ID).deserializeCoords(coords);
-          checkDetection();
+          if(players.getByID(data.player.ID) != null){
+            players.getByID(data.player.ID).deserializeCoords(coords);
+            checkDetection();
+          }
         }
     });
 
@@ -54,17 +56,20 @@ io.sockets.on('connection', function (socket) {
 var checkDetection = function(){
     for(let v of players.players){
           for(let v2 of players.players){
-            // if(v2.snake.arrayPos().indexOf(v.snake.getHeadPos()) > -1 && v.ID != v2.ID){
-            //     gameOver(v);
-            // }
+            if(v2.snake.arrayPos().indexOf(v.snake.getHeadPos()) > -1 && v.ID != v2.ID){
+                gameOver(v);
+            }
         }
     }
 }
 
 var gameOver = function(player: Player){
-    player.socket.broadcast.emit('gameOver', {player : player.ID});
+    io.sockets.emit('gameOver', {player : {ID : player.ID}});
     players.removePlayerByID(player.ID);
-    player.socket.close();//TODO
+    if(players.players.length == 1){
+        io.sockets.emit('gameWin', {player : {ID : players.players[0].ID}});
+    }
+    // player.socket.destroy();//TODO
 }
 
 

@@ -10,7 +10,7 @@ export class SnakePart{
     }
 
     pos(): string{
-        return x+"-"+y;
+        return this.x + "-" + this.y;
     }
 }
 
@@ -19,7 +19,7 @@ export class Snake {
     lastKey: number;
     startPoint: SnakePart
 
-    constructor(lenght:number, startPoint:number) {
+    constructor(lenght:number, startPoint:SnakePart) {
         this.coords = new Array<SnakePart>();
         this.init(lenght, startPoint);
     }
@@ -36,8 +36,8 @@ export class Snake {
 
     arrayPos(): Array<string>{
         var arrayPos = new Array<string>();
-        $.each(coords, function(k, v){
-            arrayPos.push(v.post());
+        $.each(this.coords, function(k, v){
+            arrayPos.push(v.pos());
         });
         return arrayPos;
     }

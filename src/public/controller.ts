@@ -1,6 +1,6 @@
 /// <reference path="../../declarations/jquery.d.ts" />
 
-import {Interactor, Player} from "./models";
+import {Key, Interactor, Player} from "./models";
 import {Movement} from "./interaction";
 
 export class Game {
@@ -69,7 +69,7 @@ if (delta > interval) {
 update() {
 // TODO
     switch (this.playerMoi.snake.lastKey) {
-            case Key.up:
+            case Key.Up:
 
 
 $.each(this.playerMoi.snake.coords,function(key,val){
@@ -87,7 +87,7 @@ if(key==0){
 
 
                 break;
-            case Key.down:
+            case Key.Down:
 $.each(this.playerMoi.snake.coords,function(key,val){
 //déplacer chaque snake part de son suivant
 
@@ -101,21 +101,21 @@ if(key==0){
 
                 });
                 break;
-            case Key.right:
-$.each(playerMoi.snake.coords,function(key,val){
+            case Key.Right:
+$.each(this.playerMoi.snake.coords,function(key,val){
 //déplacer chaque snake part de son suivant
 
 if(key==0){
     val.x = val.x+1;
     val.y = val.y;
 }else{
-    val.x = playerMoi.snake.coords[key-1];
-    val.y = playerMoi.snake.coords[key-1];
+    val.x = this.playerMoi.snake.coords[key-1];
+    val.y = this.playerMoi.snake.coords[key-1];
 }
 
                 });
                 break;
-            case Key.left:
+            case Key.Left:
 $.each(this.playerMoi.snake.coords,function(key,val){
 //déplacer chaque snake part de son suivant
 

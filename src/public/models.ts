@@ -15,7 +15,6 @@ export class SnakePart{
 
     draw (ctx)
     {
-        ctx.lineWidth = 5;
         ctx.fillRect(this.x,this.y,5,5);
         ctx.stroke();
     }
@@ -44,14 +43,14 @@ export class Snake {
 
     draw (ctx)
     {
+        let lastPoint:SnakePart = this.coords.pop();
+        ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
+        ctx.fillStyle("#fff");
+	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
         for (let point of this.coords)
         {
             point.draw(ctx);
         }
-        let lastPoint:SnakePart = this.coords[this.coords.length-1];
-        ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
-	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
-        this.coords.pop();
     }
 
     getHead(): SnakePart{

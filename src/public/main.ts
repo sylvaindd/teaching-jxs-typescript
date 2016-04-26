@@ -7,7 +7,7 @@ import {Player} from "./models"
 
 const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
-const game: Game;
+const game: Game = new Game(canvas, speed);
 
 var nick;
 var color;
@@ -30,7 +30,7 @@ $(function() {
     });
 
     socket = io.connect('http://localhost:8080');
-    game = new Game(canvas, speed, socket);
+    game.socket = socket;
 
     if(socket != null)
         $( "#dialogInit" ).dialog("open");

@@ -67,7 +67,7 @@ export class Player {
     constructor(nick: string, color: number) {
         this.nick = nick;
         this.color = color;
-        this.snake = new Snake();
+        this.snake = new Snake(3, new SnakePart(20,5));
     }
 
     getCoords(): Array<SnakePart>{

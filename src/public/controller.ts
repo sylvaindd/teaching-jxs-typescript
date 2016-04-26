@@ -134,7 +134,7 @@ let i:number =0;
                     break;
 
         }
-    this.playerMoi.draw(this.canvasContext);
+    this.playerMoi.draw(this.canvasContext, this.canvas);
     }
 
 }

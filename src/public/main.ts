@@ -7,12 +7,7 @@ import {Player} from "./models"
 
 const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
-<<<<<<< HEAD
-const game = new Game(canvas, speed);
-
-=======
 const game: Game = new Game(canvas, speed);
->>>>>>> origin/master
 
 var nick;
 var color;
@@ -42,6 +37,7 @@ $(function() {
 
 
     socket.on('newPlayer', function(data) {
+        data = JSON.parse(data);
         console.log(data);
         refreshListPlayers(data.players);
     });
@@ -61,7 +57,13 @@ $(function() {
     });
 });
 
+
+$("#start").click(function(){
+    socket.emit('start');
+});
+
 var refreshListPlayers = function(players){
+    console.log(players);
     $('#listPlayers').html("");
     game.players = new Array<Player>();
     $.each(players, function(k, v){
@@ -73,14 +75,7 @@ var refreshListPlayers = function(players){
 var init = function(){
     nick = $("#nick").val();
     color = $("#color").val();
-<<<<<<< HEAD
-    playerMoi = new Player(nick, color,0);
-    game.setPlayerMoi(playerMoi);
-    game.start();
-    $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
 
-=======
->>>>>>> origin/master
     socket.emit('newPlayer', {nick : nick, color : color});
     document.title = nick + ' - ' + document.title;
 }

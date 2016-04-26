@@ -115,9 +115,9 @@ export class Player {
     getCoords(): Array<SnakePart>{
         return this.snake.coords;
     }
-getSnake() : Snake{
-    return this.snake;
-}
+    getSnake() : Snake{
+        return this.snake;
+    }
 }
 
 export abstract class Interactor {

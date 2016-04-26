@@ -8,7 +8,7 @@ import {Player} from "./models"
 const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
 const game = new Game(canvas, speed);
-game.start();
+
 
 var nick;
 var color;
@@ -53,6 +53,7 @@ var init = function(){
     color = $("#color").val();
     playerMoi = new Player(nick, color,0);
     game.setPlayerMoi(playerMoi);
+    game.start();
     $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
 
     socket.emit('newPlayer', {nick : nick, color : color});

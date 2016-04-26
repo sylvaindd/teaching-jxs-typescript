@@ -124,7 +124,7 @@ export class Player {
     getCoords(): Array<SnakePart>{
         return this.snake.coords;
     }
-    getSnake() : Snake{
+    getSnake(): Snake{
         return this.snake;
     }
 

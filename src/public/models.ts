@@ -3,6 +3,7 @@ import {Movement} from "./interaction";
 export class SnakePart{
     x: number;
     y: number;
+
     constructor (x, y) {
         this.x = x;
         this.y = y;
@@ -14,8 +15,8 @@ export class Snake {
     lastKey: number;
     startPoint: SnakePart
 
-constructor(lenght:number, startPoint:number) {
-        this.coords = new Array();
+    constructor(lenght:number, startPoint:number) {
+        this.coords = new Array<SnakePart>();
         init(lenght, startPoint);
     }
 
@@ -41,7 +42,7 @@ export class Players {
     }
     
     array(): Array<Player>{
-            return this.players.slice();
+        return this.players.slice();
     }
     
     removePlayer(player: Player): void{
@@ -64,7 +65,7 @@ export class Player {
         this.snake = new Snake();
     }
 
-    getCoords(): Array<number | number>{
+    getCoords(): Array<SnakePart>{
         return this.snake.coords;
     }
 }

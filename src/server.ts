@@ -1,7 +1,8 @@
 /// <reference path="../declarations/ws.d.ts" />
 /// <reference path="../declarations/node.d.ts" />
+/// <reference path="../../declarations/jquery.d.ts"
 
-import {Players, Player} from "./public/models";
+import {Players, Player, Snake, SnakePart} from "./public/models";
 
 var app = require('express')(),
     server = require('http').createServer(app),
@@ -35,7 +36,11 @@ io.sockets.on('connection', function (socket, player) {
 
 
 var checkDetection = function(){
-    
+    $.each(players, function(k, v){
+        $.each(players, function(k, v){
+
+        });
+    });
 }
 
 

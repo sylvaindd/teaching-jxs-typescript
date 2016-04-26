@@ -5,11 +5,11 @@
 import {Game} from "./controller"
 import {Player} from "./models"
 
-const canvas = <HTMLCanvasElement> document.getElementById("snakeGame");
+const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
 const game = new Game(canvas, speed);
 //game.start();
-var playerMoi: Player;
+export var playerMoi: any;
 
 var nick;
 var color;

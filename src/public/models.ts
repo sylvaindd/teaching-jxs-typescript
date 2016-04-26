@@ -79,6 +79,7 @@ export class Player {
     nick: string;
     color: number;
     snake: Snake;
+    socket;
     
     constructor(nick: string, color: number) {
         this.nick = nick;

@@ -68,7 +68,7 @@ export class Snake {
         for(let v of this.coords){
            json += "'"+v.pos()+"',";
         }
-        json = json.substring(0, json.length - 2) + "]";
+        json = json.substring(0, json.length - 1) + "]";
         return json;
     }
 }
@@ -105,7 +105,7 @@ export class Players {
         for(let v of this.players){
             json += v.serialize() + ",";
         }
-        json = json.substring(0, json.length - 2) + "]}";
+        json = json.substring(0, json.length - 1) + "]}";
         return json;
     }
 

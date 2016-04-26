@@ -48,6 +48,8 @@ var checkDetection = function(){
 
 var gameOver = function(player: Player){
     player.socket.broadcast.emit('gameOver', {player : player.ID});
+    players.removePlayerByID(player.ID);
+    player.socket.close();//TODO
 }
 
 

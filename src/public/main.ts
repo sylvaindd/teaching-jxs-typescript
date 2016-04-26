@@ -44,7 +44,7 @@ $(function() {
     socket.on('MyPlayer', function(data) {
         console.log(data);
 
-        $.each(game.players, function(k, v){
+        $.each(game.players.players, function(k, v){
             if(v.ID == data.ID)
                 playerMoi = v;
         });
@@ -64,10 +64,10 @@ $("#start").click(function(){
 var refreshListPlayers = function(players){
     console.log(players);
     $('#listPlayers').html("");
-    game.players = new Array<Player>();
+    game.players.players = new Array<Player>();
     $.each(players, function(k, v){
         v = v.player;
-        game.players.push(new Player(v.nick, v.color, v.ID));
+        game.players.players.push(new Player(v.nick, v.color, v.ID));
         $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
     });
 }

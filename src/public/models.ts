@@ -68,7 +68,7 @@ export class Snake {
         for(let v of this.coords){
            json += "'"+v.pos()+"',";
         }
-        json = json.substring(0, json.length - 2) + "]";
+        json = json.substring(0, json.length - 1) + "]";
         return json;
     }
 }
@@ -82,9 +82,12 @@ export class Players {
 
     draw (ctx, canvas)
     {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
+	    ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
         for (let player of this.players)
         {
-            player.draw(ctx, canvas);
+            player.draw(ctx);
         }
     }
 
@@ -105,7 +108,7 @@ export class Players {
         for(let v of this.players){
             json += v.serialize() + ",";
         }
-        json = json.substring(0, json.length - 2) + "]}";
+        json = json.substring(0, json.length - 1) + "]}";
         return json;
     }
 
@@ -155,11 +158,8 @@ export class Player {
         return this.snake;
     }
 
-    draw (ctx, canvas)
+    draw (ctx)
     {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
-	    ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
         ctx.beginPath();
 	    ctx.strokeStyle = this.color;
         this.snake.draw(ctx);

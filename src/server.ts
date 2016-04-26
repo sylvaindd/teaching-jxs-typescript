@@ -22,8 +22,6 @@ io.sockets.on('connection', function (socket) {
         
         players.addPlayer(socket.player);
 
-        console.log(players.serialize());
-
         io.sockets.emit('newPlayer', {players : players.serialize()});
         socket.emit('MyPlayer', {nick : socket.player.nick, color : socket.player.color, ID : socket.player.ID});
     });

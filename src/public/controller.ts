@@ -69,7 +69,6 @@ export class Game extends Interactor{
     update() {
 
     for(let player of this.players.players){
-         console.log("update"+player.nick);
         let i:number =0;
         let nbCaseToDelete:number =5
         switch (player.getSnake().lastKey) {

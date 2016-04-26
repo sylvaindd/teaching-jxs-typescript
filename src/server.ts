@@ -1,6 +1,6 @@
 /// <reference path="../declarations/ws.d.ts" />
 /// <reference path="../declarations/node.d.ts" />
-/// <reference path="../../declarations/jquery.d.ts"
+/// <reference path="../declarations/jquery.d.ts" />
 
 import {Players, Player, Snake, SnakePart} from "./public/models";
 

@@ -3,19 +3,22 @@
 import {Key, Interactor, Player} from "./models";
 import {Movement} from "./interaction";
 
-export class Game {
+export class Game extends Interactor{
     players: Array<Player>;
     playerMoi : Player;
     canvasContext : CanvasRenderingContext2D;
     gridWidth : number;
     gridHeight : number;
+movement : Movement;
 
 constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
+    super(canvas);
     this.gridWidth = canvas.width / gridSize;
     this.gridHeight = canvas.height / gridSize;
     this.canvasContext = canvas.getContext("2d");
 
     this.players = new Array();
+    this.movement = new Movement(canvas, this);
 
 // TODO : listen to user interaction
 }

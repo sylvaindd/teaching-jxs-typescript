@@ -26,6 +26,7 @@ export class Snake {
 
     init(lenght:number, startPoint: SnakePart)
     {
+        this.lastKey = Key.Right;
         this.coords.push(startPoint);
         for(let i:number = 1 ; i < lenght ; i++)
         {
@@ -118,7 +119,7 @@ export class Player {
 
 export abstract class Interactor {
     
-    constructor(public canvas) {
+    constructor(public canvas: HTMLCanvasElement) {
     }
     
     abstract onArrowkeyPressed(movement: Movement): void;

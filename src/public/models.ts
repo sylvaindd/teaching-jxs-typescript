@@ -8,6 +8,10 @@ export class SnakePart{
         this.x = x;
         this.y = y;
     }
+
+    pos(): string{
+        return this.x + "-" + this.y;
+    }
 }
 
 export class Snake {
@@ -15,9 +19,9 @@ export class Snake {
     lastKey: number;
     startPoint: SnakePart
 
-    constructor(lenght:number, startPoint:number) {
+    constructor(lenght:number, startPoint:SnakePart) {
         this.coords = new Array<SnakePart>();
-        init(lenght, startPoint);
+        this.init(lenght, startPoint);
     }
 
     init(lenght:number, startPoint: SnakePart)

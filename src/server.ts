@@ -37,12 +37,11 @@ io.sockets.on('connection', function (socket, player) {
 
 var checkDetection = function(){
     $.each(players, function(k, v){
-        $.each(v.coords, function(k2, v2){
-            $.each(players, function(k3, v3){
-                if(v3.arrayPos().indexOf(v2.pos()) > -1){
 
-                }
-            });
+        $.each(players, function(k3, v3){
+//            if(v3.arrayPos().indexOf(v2.pos()) > -1){
+//
+//            }
         });
     });
 }

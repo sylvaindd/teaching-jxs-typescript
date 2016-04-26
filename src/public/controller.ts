@@ -84,8 +84,7 @@ export class Game extends Interactor{
                             val.x = player.getCoords()[i-1].x;
                             val.y = player.getCoords()[i-1].y;
                         }
-                            i++;
-
+                        i++;
                     };
 
 
@@ -117,7 +116,7 @@ export class Game extends Interactor{
                             val.x = player.getCoords()[i-1].x;
                             val.y = player.getCoords()[i-1].y;
                         }
-
+                        i++;
                     };
                     break;
                 case Key.Left:
@@ -132,6 +131,7 @@ export class Game extends Interactor{
                             val.x = player.getCoords()[i-1].x;
                             val.y = player.getCoords()[i-1].y;
                         }
+                        i++;
 
                     };
                     break;

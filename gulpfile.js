@@ -19,7 +19,7 @@ gulp.task('move', function(){
 });
 
 
-gulp.task('start', function () {
+gulp.task('default', function () {
     runSequence('clean', 'compile', 'move', function(){
         nodemon({
             script: 'dist/src/server.js'

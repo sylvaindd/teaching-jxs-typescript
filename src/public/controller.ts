@@ -10,6 +10,7 @@ export class Game extends Interactor{
     gridWidth : number;
     gridHeight : number;
     movement : Movement;
+    socket;
 
     constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
         super(canvas);

@@ -7,8 +7,7 @@ import {Player} from "./models"
 
 const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
-const game = new Game(canvas, speed);
-game.start();
+const game: Game = new Game(canvas, speed);
 
 var nick;
 var color;
@@ -31,30 +30,44 @@ $(function() {
     });
 
     socket = io.connect('http://localhost:8080');
+    game.socket = socket;
+
     if(socket != null)
         $( "#dialogInit" ).dialog("open");
 
-    socket.on('refresh', function(data) {
-        //TODO : Refresh
-    });
 
     socket.on('newPlayer', function(data) {
         console.log(data);
-        $('#listPlayers').html("");
-        $.each(data.players, function(k, v){
-           $('#listPlayers').append('<li style="color:'+v.color+'">'+v.nick+'</li>');
+        refreshListPlayers(data.players);
+    });
+
+    socket.on('MyPlayer', function(data) {
+        console.log(data);
+
+        $.each(game.players, function(k, v){
+            if(v.ID == data.ID)
+                playerMoi = v;
         });
+        game.setPlayerMoi(playerMoi);
+    });
+
+    socket.on('start', function(data) {
+        game.start();
     });
 });
 
+var refreshListPlayers = function(players){
+    $('#listPlayers').html("");
+    game.players = new Array<Player>();
+    $.each(players, function(k, v){
+        game.players.push(new Player(v.nick, v.color, v.ID));
+        $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
+    });
+}
 
 var init = function(){
     nick = $("#nick").val();
     color = $("#color").val();
-    playerMoi = new Player(nick, color);
-    game.setPlayerMoi(playerMoi);
-    $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
-
     socket.emit('newPlayer', {nick : nick, color : color});
     document.title = nick + ' - ' + document.title;
 }

@@ -9,11 +9,11 @@ const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const speed = 10;
 const game = new Game(canvas, speed);
 //game.start();
-export var playerMoi: any;
 
 var nick;
 var color;
 var socket;
+var playerMoi;
 $(function() {
     $( "#dialogInit" ).dialog({
       resizable: false,
@@ -52,6 +52,7 @@ var init = function(){
     nick = $("#nick").val();
     color = $("#color").val();
     playerMoi = new Player(nick, color);
+    game.setPlayerMoi(playerMoi);
     $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
 
     socket.emit('newPlayer', {nick : nick, color : color});

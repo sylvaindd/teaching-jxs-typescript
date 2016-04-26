@@ -1,12 +1,11 @@
 /// <reference path="../declarations/ws.d.ts" />
 /// <reference path="../declarations/node.d.ts" />
 
-import {Players, Player} from "./models";
+import {Players, Player} from "./public/models";
 
 var app = require('express')(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
-    ent = require('ent'), // Permet de bloquer les caractères HTML (sécurité équivalente à htmlentities en PHP)
     fs = require('fs');
 
 require('./routes')(app);
@@ -24,7 +23,6 @@ io.sockets.on('connection', function (socket, player) {
     });
 
     socket.on('refresh', function (coords) {
-        coords = ent.encode(coords);
         socket.broadcast.emit('refresh', {nick: socket.player.nick, coords: coords});
         checkDetection();
     }); 

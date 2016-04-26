@@ -1,4 +1,6 @@
-class Movement {
+import {Key, Interactor} from "./models";
+
+export class Movement {
     canvas;
     interactor: Interactor;
     ctx;

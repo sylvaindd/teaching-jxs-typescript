@@ -1,4 +1,6 @@
-class Snake {
+import {Movement} from "./interaction";
+
+export class Snake {
     coords: Array<number | number>;
 
     constructor() {
@@ -6,7 +8,7 @@ class Snake {
     }
 }
 
-class Players {
+export class Players {
     players: Array<Player>;
     
     constructor() {
@@ -34,7 +36,7 @@ class Players {
     
 }
 
-class Player {
+export class Player {
     nick: string;
     color: number;
     snake: Snake;
@@ -50,7 +52,7 @@ class Player {
     }
 }
 
-abstract class Interactor {
+export abstract class Interactor {
     
     constructor(public canvas) {
     }
@@ -58,7 +60,7 @@ abstract class Interactor {
     abstract onArrowkeyPressed(movement: Movement): void;
 }
 
-enum Key {
+export enum Key {
     Left, 
     Up, 
     Right, 

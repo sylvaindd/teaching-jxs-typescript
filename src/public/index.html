@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-        <script src="node_modules/systemjs/dist/system.js"></script>
+        <script src="/system.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="models.js"></script>
         <script src="controller.js"></script>
@@ -60,52 +60,6 @@
             System
                 .import('Main')
                 .then(null, console.error.bind(console));
-
-            var nick;
-            var color;
-            var socket;
-            $(function() {
-                $( "#dialogInit" ).dialog({
-                  resizable: false,
-                  modal: true,
-                  autoOpen: false,
-                  buttons: {
-                    "Valider": function() {
-                        $( this ).dialog( "close" );
-                        init();
-                    },
-                    Cancel: function() {
-                      $( this ).dialog( "close" );
-                    }
-                  }
-                });
-                
-                socket = io.connect('http://localhost:8080');
-                if(socket != null)
-                    $( "#dialogInit" ).dialog("open");
-                
-                socket.on('refresh', function(data) {
-                    //TODO : Refresh
-                });
-
-                socket.on('newPlayer', function(data) {
-                    console.log(data);
-                    $('#listPlayers').html("");
-                    $.each(data.players, function(k, v){
-                       $('#listPlayers').append('<li style="color:'+v.color+'">'+v.nick+'</li>');
-                    });
-                });
-            });
-            
-            
-            var init = function(){
-                nick = $("#nick").val();
-                color = $("#color").val();
-                $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
-
-                socket.emit('newPlayer', {nick : nick, color : color});
-                document.title = nick + ' - ' + document.title;
-            }
         </script>
     </body>
 </html>

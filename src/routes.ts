@@ -17,6 +17,9 @@ module.exports = function (app) {
         res.sendfile(__dirname + '/public/view.js');
     });
     
+    app.get('/system.js', function (req, res) {
+        res.sendfile(__dirname + '/node_modules/systemjs/dist/system.js');
+    });
     
     app.get('/', function (req, res) {
         res.sendfile(__dirname + '/public/index.html');

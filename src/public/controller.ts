@@ -20,7 +20,8 @@ export class Game {
     }
 
     onArrowkeyPressed(movement: Movement): void{
-        movement.key
+        movement.key;
+        playerMoi.snake.lastKey = movement.key;
 	}
 
     /**

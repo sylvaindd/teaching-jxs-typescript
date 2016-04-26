@@ -2,6 +2,7 @@ import {Movement} from "./interaction";
 
 export class Snake {
     coords: Array<number | number>;
+    lastKey: number;
 
     constructor() {
         this.coords = new Array();

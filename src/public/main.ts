@@ -8,7 +8,7 @@ const canvas = <HTMLCanvasElement> document.getElementById("snakeGame");
 const speed = 10;
 const game = new Game(canvas, speed);
 //game.start();
-var playerMoi: Player;
+export var playerMoi: any;
 
 var nick;
 var color;

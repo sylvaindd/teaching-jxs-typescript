@@ -56,10 +56,20 @@ export class Snake {
 
     arrayPos(): Array<string>{
         var arrayPos = new Array<string>();
-        $.each(this.coords, function(k, v){
+
+        for(let v of this.coords){
             arrayPos.push(v.pos());
-        });
+        }
         return arrayPos;
+    }
+
+    jsonPos(): string{
+        var json: string = "[";
+        for(let v of this.coords){
+           json += "'"+v.pos()+"',";
+        }
+        json += "]";
+        return json;
     }
 }
 
@@ -90,11 +100,20 @@ export class Players {
         return this.players.slice();
     }
     
-    getByID(ID: number){
-        $.each(this.players, function(k, v){
+    serialize(): string{
+        let json: string = "{players:[";
+        for(let v of this.players){
+            json += v.serialize();
+        }
+        json += "]}";
+        return json;
+    }
+
+    getByID(ID: number): Player{
+        for(let v of this.players){
             if(v.ID == ID)
                 return v;
-        });
+        }
         return null;
     }
 
@@ -141,6 +160,10 @@ export class Player {
         ctx.beginPath();
 	    ctx.strokeStyle = this.color;
         this.snake.draw(ctx);
+    }
+
+    serialize(): string{
+        return "{player : {nick : '" + this.nick + "', color : '" + this.color + "', ID : '" + this.ID + "', snake : {coords : " + this.snake.jsonPos() + "}}}";
     }
 }
 

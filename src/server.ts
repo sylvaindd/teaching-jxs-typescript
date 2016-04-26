@@ -23,7 +23,8 @@ io.sockets.on('connection', function (socket) {
         players.addPlayer(socket.player);
         
         socket.emit('MyPlayer', {nick : socket.player.nick, color : socket.player.color, ID : socket.player.ID});
-        io.sockets.emit('newPlayer', {players : players.array()});
+        console.log(players.serialize());
+        io.sockets.emit('newPlayer', {players : players.serialize()});
     });
 
     socket.on('refresh', function (coords) {
@@ -31,6 +32,10 @@ io.sockets.on('connection', function (socket) {
         checkDetection();
     }); 
     
+    socket.on('start', function () {
+        io.sockets.emit('start');
+    });
+
     socket.on('disconnect', function() {
         var index = players.removePlayer(socket.player);
         socket.broadcast.emit('newPlayer', {players : players.array()});
@@ -41,7 +46,7 @@ io.sockets.on('connection', function (socket) {
 var checkDetection = function(){
     $.each(players, function(k, v){
         $.each(players, function(k2, v2){
-            if(v2.arrayPos().indexOf(v.snake.getHead()) > -1){
+            if(v2.arrayPos().indexOf(v.snake.getHead()) > -1 && k != k2){
                 gameOver(v);
             }
         });

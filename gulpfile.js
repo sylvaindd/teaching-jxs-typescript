@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     nodemon = require('gulp-nodemon'),
-    ts = require('gulp-typescript'),
     clean = require('gulp-clean'),
     shell = require('gulp-shell');
 

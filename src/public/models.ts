@@ -138,6 +138,9 @@ export class Player {
 
     draw (ctx)
     {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
+	    ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
         ctx.beginPath();
 	    ctx.strokeStyle = this.color;
         this.snake.draw(ctx);

@@ -67,7 +67,9 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
+
     for(let player of this.players.players){
+         console.log("update"+player.nick);
         let i:number =0;
         switch (player.getSnake().lastKey) {
                 case Key.Up:
@@ -82,8 +84,7 @@ export class Game extends Interactor{
                             val.x = player.getCoords()[i-1].x;
                             val.y = player.getCoords()[i-1].y;
                         }
-                            i++;
-
+                        i++;
                     };
 
 
@@ -115,7 +116,7 @@ export class Game extends Interactor{
                             val.x = player.getCoords()[i-1].x;
                             val.y = player.getCoords()[i-1].y;
                         }
-
+                        i++;
                     };
                     break;
                 case Key.Left:
@@ -130,6 +131,7 @@ export class Game extends Interactor{
                             val.x = player.getCoords()[i-1].x;
                             val.y = player.getCoords()[i-1].y;
                         }
+                        i++;
 
                     };
                     break;

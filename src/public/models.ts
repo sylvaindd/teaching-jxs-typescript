@@ -48,6 +48,10 @@ export class Snake {
         {
             point.draw(ctx);
         }
+        let lastPoint:SnakePart = this.coords[this.coords.length-1];
+        ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
+	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
+        this.coords.pop();
     }
 
     getHead(): SnakePart{
@@ -80,11 +84,8 @@ export class Players {
         this.players = new Array<Player>();
     }
 
-    draw (ctx, canvas)
+    draw (ctx)
     {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
-	    ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
         for (let player of this.players)
         {
             player.draw(ctx);

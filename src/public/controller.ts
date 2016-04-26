@@ -70,24 +70,22 @@ if(this.playerMoi.lastKey == Key.Up && movement.key == Key.Down || this.playerMo
     update() {
 
     for(let player of this.players.players){
-         console.log("update"+player.nick);
         let i:number =0;
         let nbCaseToDelete:number =5
         switch (player.getSnake().lastKey) {
-                case Key.Up:
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
-                    break;
-                case Key.Down:
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
-                    break;
-                case Key.Right:
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
-                    break;
-                case Key.Left:
-                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
-                    break;
+            case Key.Up:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
+                break;
+            case Key.Down:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
+                break;
+            case Key.Right:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
+                break;
+            case Key.Left:
+                 player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
+                break;
             }
-
         }
         this.players.draw(this.canvasContext);
     }

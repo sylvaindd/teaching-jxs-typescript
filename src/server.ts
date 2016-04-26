@@ -26,13 +26,17 @@ io.sockets.on('connection', function (socket) {
         socket.emit('MyPlayer', {nick : socket.player.nick, color : socket.player.color, ID : socket.player.ID});
     });
 
-    socket.on('refresh', function (coords) {
-        socket.broadcast.emit('refresh', {nick: socket.player.nick, coords: coords});
+    socket.on('refresh', function (data) {
+        data = JSON.parse(data);
+        players.getByID(data.player.ID).snake.coords = data.player.snake.coords;
         checkDetection();
     }); 
     
     socket.on('start', function () {
         io.sockets.emit('start');
+        setInterval(function() {
+            io.sockets.emit('refresh', {players : players.serialize()});
+        }, 50);
     });
 
     socket.on('disconnect', function() {

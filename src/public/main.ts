@@ -51,7 +51,7 @@ $(function() {
 var init = function(){
     nick = $("#nick").val();
     color = $("#color").val();
-    playerMoi = new Player(nick, color);
+    playerMoi = new Player(nick, color,0);
     game.setPlayerMoi(playerMoi);
     $('#listPlayers').append('<li style="color:'+color+'">'+nick+'</li>');
 

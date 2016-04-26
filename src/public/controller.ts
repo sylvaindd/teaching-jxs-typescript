@@ -129,6 +129,7 @@ export class Game extends Interactor{
 
         }
         console.log("update");
+    this.playerMoi.draw(this.canvasContext);
     }
 
 }

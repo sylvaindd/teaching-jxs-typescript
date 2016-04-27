@@ -95,6 +95,16 @@ export class Snake {
         return arrayPos;
     }
 
+    arrayPosNoHead(): Array<string>{
+        let arrayPos: Array<string> = new Array<string>();
+        let i: number = 0 ;
+        for(let v of this.coords){
+          if(i++ > 0)
+            arrayPos.push(v.posString());
+        }
+        return arrayPos;
+    }
+
     jsonPos(): string{
         var json: string = "[";
         for(let v of this.coords){

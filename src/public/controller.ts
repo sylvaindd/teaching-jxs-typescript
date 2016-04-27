@@ -116,20 +116,37 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
-        let nbCaseToDelete:number =5
+        let tailleCase:number =5
         let player = this.players.getByID(this.playerMoi.ID);
         switch (this.playerMoi.getSnake().lastKey) {
             case Key.Up:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-nbCaseToDelete));
+                if(player.getCoords()[0].y == 0){
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, this.canvas.height-tailleCase));
+                }else{
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-tailleCase));
+                }
+
                 break;
             case Key.Down:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+nbCaseToDelete));
+                if(player.getCoords()[0].y == this.canvas.height){
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, 0));
+                }else{
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+tailleCase));
+                }
                 break;
             case Key.Right:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete, player.getCoords()[0].y));
+                if(player.getCoords()[0].x == this.canvas.width){
+                    player.getCoords().unshift(new SnakePart(0, player.getCoords()[0].y));
+                }else{
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+tailleCase, player.getCoords()[0].y));
+                }
                 break;
             case Key.Left:
-                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete, player.getCoords()[0].y));
+                if(player.getCoords()[0].x == 0){
+                    player.getCoords().unshift(new SnakePart(this.canvas.width-tailleCase, player.getCoords()[0].y));
+                }else{
+                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-tailleCase, player.getCoords()[0].y));
+                }
                 break;
         }
         if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)

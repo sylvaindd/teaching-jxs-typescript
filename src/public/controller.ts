@@ -82,9 +82,9 @@ export class Game extends Interactor{
     }
 
     generatePointMeal(){
-        let x:number = Math.floor(Math.random() * 400);
-        let y:number = Math.floor(Math.random() * 400);
-        this.pointMeal = new SnakePart(x,y);
+        let x:number = Math.floor(Math.random() * 100);
+        let y:number = Math.floor(Math.random() * 100);
+        this.pointMeal = new SnakePart(x*5,y*5);
         this.pointMeal.drawMeal(this.canvasContext);
     }
 
@@ -137,6 +137,7 @@ export class Game extends Interactor{
             {
                 player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
             }
+            this.speed+=5;
             this.pointMeal.clear(this.canvasContext);
             this.generatePointMeal();
         }

@@ -9,9 +9,12 @@
                 margin-top: 50px;
                 border: 3px solid black;
             }
+            #dialogInit{
+                width: 400px;
+            }
             #dialogInitDiv{
-                height: 50px;
-                width: 280px;
+                height: 80px;
+                width: 300px;
             }
             #rightDiv {
                 float: left;
@@ -23,6 +26,9 @@
             #color{
                 float: left;
                 margin-left: 5px;
+            }
+            .invalid {
+                color: red;
             }
             .gameOver{font-weight:bold;text-shadow:2px 2px 1px #fff;position:absolute;top:0;left:550px;background:#eee;color:red;width:70px;border:50px solid #eee;text-align:center;-moz-border-radius:90px;-webkit-border-radius:90px;border-radius:90px;box-shadow:3px 3px 10px #999;}
         </style>
@@ -61,6 +67,9 @@
         <div id="dialogInit" title="Basic dialog">
             <div id="dialogInitDiv">
                 <input id="nick" maxlength="10"/><input id="color" type="color">
+                <br/>
+                <br/>
+                <input id="ip" value="127.0.0.1:8080"/>
             </div>
         </div>
 

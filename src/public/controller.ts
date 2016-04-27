@@ -120,7 +120,7 @@ export class Game extends Interactor{
         let player = this.players.getByID(this.playerMoi.ID);
         switch (this.playerMoi.getSnake().lastKey) {
             case Key.Up:
-                if(player.getCoords()[0].y == 0){
+                if(player.getCoords()[0].y <= 0){
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, this.canvas.height-tailleCase));
                 }else{
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-tailleCase));
@@ -128,21 +128,21 @@ export class Game extends Interactor{
 
                 break;
             case Key.Down:
-                if(player.getCoords()[0].y == this.canvas.height){
+                if(player.getCoords()[0].y >= this.canvas.height){
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, 0));
                 }else{
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+tailleCase));
                 }
                 break;
             case Key.Right:
-                if(player.getCoords()[0].x == this.canvas.width){
+                if(player.getCoords()[0].x >= this.canvas.width){
                     player.getCoords().unshift(new SnakePart(0, player.getCoords()[0].y));
                 }else{
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+tailleCase, player.getCoords()[0].y));
                 }
                 break;
             case Key.Left:
-                if(player.getCoords()[0].x == 0){
+                if(player.getCoords()[0].x <= 0){
                     player.getCoords().unshift(new SnakePart(this.canvas.width-tailleCase, player.getCoords()[0].y));
                 }else{
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-tailleCase, player.getCoords()[0].y));

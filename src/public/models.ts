@@ -158,12 +158,27 @@ export class Player {
     snake: Snake;
     socket;
     ID: number;
+    startPoints: Array<SnakePart>;
 
     constructor(nick: string, color: number, ID: number) {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
-        this.snake = new Snake(5, new SnakePart(200,200));
+        this.generateStartPoints();
+        this.snake = new Snake(5, this.startPoints[this.ID]);
+    }
+
+    generateStartPoints()
+    {
+        this.startPoints = new Array<SnakePart>();
+        let point1: SnakePart = new SnakePart(100,100);
+        this.startPoints.push(point1);
+        let point2: SnakePart = new SnakePart(100,300);
+        this.startPoints.push(point2);
+        let point3: SnakePart = new SnakePart(300,100);
+        this.startPoints.push(point3);
+        let point4: SnakePart = new SnakePart(300,300);
+        this.startPoints.push(point4);
     }
 
     getCoords(): Array<SnakePart>{

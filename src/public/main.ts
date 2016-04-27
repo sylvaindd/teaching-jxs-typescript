@@ -77,11 +77,31 @@ var init = function(){
       init2();
     });
 
+    socket.on('newPlayer', function(data) {
+      if(data.players.length > 0){
+        data = JSON.parse(data.players);
+        refreshListPlayers(data.players);
+      }
+    });
+
+    socket.on('MyPlayer', function(data) {
+        for(let v of game.players.players){
+            if(v.ID == data.ID)
+                playerMoi = v;
+        }
+        game.setPlayerMoi(playerMoi);
+    });
+
+    socket.on('start', function(data) {
+        game.start();
+    });
+
     setTimeout(function(){
-      if(!connected)
+      if(!connected){
         alert("erreur IP");
         socket.destroy();
         return;
+      }
     }, 1000);
 
     var init2 = function(){
@@ -91,25 +111,6 @@ var init = function(){
 
       $("#start").click(function(){
           socket.emit('start');
-      });
-
-      socket.on('newPlayer', function(data) {
-        if(data.players.length > 0){
-          data = JSON.parse(data.players);
-          refreshListPlayers(data.players);
-        }
-      });
-
-      socket.on('MyPlayer', function(data) {
-          for(let v of game.players.players){
-              if(v.ID == data.ID)
-                  playerMoi = v;
-          }
-          game.setPlayerMoi(playerMoi);
-      });
-
-      socket.on('start', function(data) {
-          game.start();
       });
 
       socket.emit('newPlayer', {nick : nick, color : color});

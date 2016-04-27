@@ -7,8 +7,8 @@ import {Player} from "./models"
 
 const canvas = <HTMLCanvasElement> document.getElementById("canvas");
 const ctx = canvas.getContext('2d');
-canvas.width=400;
-canvas.height=400;
+canvas.width=250;
+canvas.height=250;
 ctx.fillStyle = '#fff'; // set canvas' background color
 ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
 const speed = 10;

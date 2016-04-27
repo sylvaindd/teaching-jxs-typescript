@@ -128,14 +128,14 @@ export class Game extends Interactor{
 
                 break;
             case Key.Down:
-                if(player.getCoords()[0].y >= this.canvas.height){
+                if(player.getCoords()[0].y >= this.canvas.height-5){
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, 0));
                 }else{
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+tailleCase));
                 }
                 break;
             case Key.Right:
-                if(player.getCoords()[0].x >= this.canvas.width){
+                if(player.getCoords()[0].x >= this.canvas.width-5){
                     player.getCoords().unshift(new SnakePart(0, player.getCoords()[0].y));
                 }else{
                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+tailleCase, player.getCoords()[0].y));
@@ -151,7 +151,7 @@ export class Game extends Interactor{
         }
         if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)
         {
-            for(let i:number = 0 ; i < 3 ; i++)
+            for(let i:number = 0 ; i < 5 ; i++)
             {
                 player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
             }

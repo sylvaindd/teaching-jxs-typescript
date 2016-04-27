@@ -13,8 +13,10 @@ export class SnakePart{
         return this.x + "-" + this.y;
     }
 
-    draw (ctx)
+    draw (ctx, color: number)
     {
+        ctx.beginPath();
+        ctx.fillStyle = color;
         ctx.fillRect(this.x,this.y,5,5);
         ctx.stroke();
     }
@@ -41,15 +43,15 @@ export class Snake {
         }
     }
 
-    draw (ctx)
+    draw (ctx, color: number)
     {
         let lastPoint:SnakePart = this.coords.pop();
         ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
-        ctx.fillStyle("#fff");
+        ctx.fillStyle = "#fff";
 	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
         for (let point of this.coords)
         {
-            point.draw(ctx);
+            point.draw(ctx, color);
         }
     }
 
@@ -160,9 +162,7 @@ export class Player {
 
     draw (ctx)
     {
-        ctx.beginPath();
-	    ctx.strokeStyle = this.color;
-        this.snake.draw(ctx);
+        this.snake.draw(ctx, this.color);
     }
 
     serialize(): string{

@@ -69,8 +69,10 @@ let connected: boolean = false;
 var init = function(){
     nick = $("#nick").val();
     color = $("#color").val();
-    ip = $("#ip").val();
-
+    // ip = $("#ip").val();
+    var url = window.location.href;
+    var arr = url.split("/");
+    ip = arr[0] + "//" + arr[2]
     socket = io.connect(ip);
 
     socket.on('connect', function() {

@@ -77,12 +77,8 @@ export class Game extends Interactor{
       });
       this.players.init();
     // TODO : initialize game
-<<<<<<< HEAD
         this.generatePointMeal();
         this.animate(); // Start animation
-=======
-      this.animate(); // Start animation
->>>>>>> origin/master
     }
 
     generatePointMeal(){

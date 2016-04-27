@@ -47,11 +47,11 @@ export class Snake {
         this.init(lenght, startPoint);
     }
 
-    init(lenght:number, startPoint: SnakePart): void
+    init(length:number, startPoint: SnakePart): void
     {
         this.lastKey = Key.Right;
         this.coords.push(startPoint);
-        for(let i:number = 1 ; i < lenght ; i++)
+        for(let i:number = 1 ; i < length ; i++)
         {
             let point:SnakePart = new SnakePart(startPoint.x-5*i,startPoint.y);
             this.coords.push(point);

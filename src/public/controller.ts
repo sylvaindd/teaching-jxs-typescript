@@ -68,9 +68,21 @@ export class Game extends Interactor{
          * Start game
          */
     start() {
+      this.isGameOver = false;
+      $('div#gameOver').hide('fast', function() {
+        $( this ).animate({down:250}, 'slow');
+      });
+      $('div#gameWin').hide('fast', function() {
+        $( this ).animate({down:250}, 'slow');
+      });
+      this.players.init();
     // TODO : initialize game
+<<<<<<< HEAD
         this.generatePointMeal();
         this.animate(); // Start animation
+=======
+      this.animate(); // Start animation
+>>>>>>> origin/master
     }
 
     generatePointMeal(){

@@ -47,7 +47,7 @@ export class Snake {
         this.init(lenght, startPoint);
     }
 
-    init(lenght:number, startPoint: SnakePart)
+    init(lenght:number, startPoint: SnakePart): void
     {
         this.lastKey = Key.Right;
         this.coords.push(startPoint);
@@ -118,6 +118,12 @@ export class Players {
         {
             player.draw(ctx);
         }
+    }
+
+    init(): void{
+      for(let v of this.players){
+        v.init();
+      }
     }
 
     addPlayer(player: Player): void{
@@ -194,6 +200,10 @@ export class Player {
         this.startPoints.push(point3);
         let point4: SnakePart = new SnakePart(300,300);
         this.startPoints.push(point4);
+    }
+
+    init(): void{
+      this.snake = new Snake(5, this.startPoints[this.ID]);
     }
 
     getCoords(): Array<SnakePart>{

@@ -11,8 +11,9 @@ var app = require('express')(),
 
 require('./routes')(app);
 
-var players: Players = new Players();
-var IDs:number = 0;
+let players: Players = new Players();
+let IDs:number = 0;
+let isGameRuning: boolean = false;
 
 io.sockets.on('connection', function (socket) {
 
@@ -40,9 +41,13 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('start', function () {
+        isGameRuning = true;
         io.sockets.emit('start');
-        setInterval(function() {
+        let refreshLoop = setInterval(function() {
             io.sockets.emit('refresh', {players : players.serialize()});
+            if(!isGameRuning){
+              clearInterval(refreshLoop);
+            }
         }, 50);
     });
 

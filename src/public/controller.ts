@@ -11,6 +11,7 @@ export class Game extends Interactor{
     gridHeight : number;
     movement : Movement;
     isGameOver: boolean;
+    pointMeal: SnakePart
     socket;
 
     constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
@@ -68,7 +69,15 @@ export class Game extends Interactor{
          */
     start() {
     // TODO : initialize game
+        this.generatePointMeal();
         this.animate(); // Start animation
+    }
+
+    generatePointMeal(){
+        let x:number = Math.floor(Math.random() * 400);
+        let y:number = Math.floor(Math.random() * 400);
+        this.pointMeal = new SnakePart(x,y);
+        this.pointMeal.drawMeal(this.canvasContext);
     }
 
     animate() {
@@ -113,6 +122,15 @@ export class Game extends Interactor{
             case Key.Left:
                 player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete, player.getCoords()[0].y));
                 break;
+        }
+        if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)
+        {
+            for(let i:number = 0 ; i < 3 ; i++)
+            {
+                player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
+            }
+            this.pointMeal.clear(this.canvasContext);
+            this.generatePointMeal();
         }
         //console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);

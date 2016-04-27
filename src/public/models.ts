@@ -20,6 +20,21 @@ export class SnakePart{
         ctx.fillRect(this.x,this.y,5,5);
         ctx.stroke();
     }
+
+    drawMeal (ctx)
+    {
+        ctx.beginPath();
+        ctx.fillStyle = "#000";
+        ctx.fillRect(this.x,this.y,5,5);
+        ctx.stroke();
+    }
+
+    clear (ctx)
+    {
+        ctx.clearRect(this.x, this.y, 5, 5);
+        ctx.fillStyle = "#fff";
+	    ctx.fillRect(this.x, this.y, 5, 5);
+    }
 }
 
 export class Snake {

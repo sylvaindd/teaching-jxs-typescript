@@ -163,7 +163,7 @@ export class Player {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
-        this.snake = new Snake(3, new SnakePart(20,100));
+        this.snake = new Snake(5, new SnakePart(200,200));
     }
 
     getCoords(): Array<SnakePart>{

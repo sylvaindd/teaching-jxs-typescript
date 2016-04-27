@@ -82,8 +82,8 @@ export class Game extends Interactor{
     }
 
     generatePointMeal(){
-        let x:number = Math.floor(Math.random() * canvas.width);
-        let y:number = Math.floor(Math.random() * canvas.width);
+        let x:number = Math.floor(Math.random() * this.canvas.width);
+        let y:number = Math.floor(Math.random() * this.canvas.width);
         this.pointMeal = new SnakePart(x*5,y*5);
         this.pointMeal.drawMeal(this.canvasContext);
     }

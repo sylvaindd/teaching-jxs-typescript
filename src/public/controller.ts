@@ -10,6 +10,7 @@ export class Game extends Interactor{
     gridWidth : number;
     gridHeight : number;
     movement : Movement;
+    isGameOver: boolean;
     socket;
 
     constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
@@ -17,15 +18,45 @@ export class Game extends Interactor{
         this.gridWidth = canvas.width / gridSize;
         this.gridHeight = canvas.height / gridSize;
         this.canvasContext = canvas.getContext("2d");
+        this.isGameOver = false;
 
         this.players = new Players();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
+
+    }
+
+    addSocket(socket): void{
+      this.socket = socket;
+      this.socket.on('refresh', function(data){
+        data = JSON.parse(data.players);
+        for(let v of data.players){
+          v = v.player;
+           if(this.playerMoi.ID != v.ID){
+              var coords = v.snake.coords;
+              coords = coords.replace(/'/g, '"');
+              coords = JSON.parse(coords);
+              this.players.getByID(v.ID).deserializeCoords(coords);
+            }
+          }
+      }.bind(this));
+      this.socket.on('gameOver', function(data){
+        if(data.player.ID == this.playerMoi.ID){
+          this.gameOver();
+        }else{
+          this.players.removePlayerByID(data.player.ID);
+        }
+      }.bind(this));
+      this.socket.on('gameWin', function(data){
+        if(data.player.ID == this.playerMoi.ID){
+          this.gameWin();
+        }
+      }.bind(this));
     }
 
     onArrowkeyPressed(movement: Movement): void{
-        movement.key;
-        this.playerMoi.snake.lastKey = movement.key;
+      if(this.playerMoi.getSnake().lastKey == Key.Up && movement.key == Key.Down || this.playerMoi.getSnake().lastKey == Key.Down && movement.key == Key.Up || this.playerMoi.getSnake().lastKey == Key.Right && movement.key == Key.Left || this.playerMoi.getSnake().lastKey == Key.Left && movement.key == Key.Right){return;}
+      this.playerMoi.snake.lastKey = movement.key;
     }
 
     setPlayerMoi(pl: Player): void{
@@ -67,28 +98,39 @@ export class Game extends Interactor{
          * Update status of game and view
          */
     update() {
-
-    for(let player of this.players.players){
-         console.log("update"+player.nick);
-        let i:number =0;
         let nbCaseToDelete:number =5
-        switch (player.getSnake().lastKey) {
-                case Key.Up:
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y-nbCaseToDelete));
-                    break;
-                case Key.Down:
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x,player.getCoords()[0].y+nbCaseToDelete));
-                    break;
-                case Key.Right:
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete,player.getCoords()[0].y));
-                    break;
-                case Key.Left:
-                     player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete,player.getCoords()[0].y));
-                    break;
-            }
-
+        let player = this.players.getByID(this.playerMoi.ID);
+        switch (this.playerMoi.getSnake().lastKey) {
+            case Key.Up:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-nbCaseToDelete));
+                break;
+            case Key.Down:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+nbCaseToDelete));
+                break;
+            case Key.Right:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+nbCaseToDelete, player.getCoords()[0].y));
+                break;
+            case Key.Left:
+                player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-nbCaseToDelete, player.getCoords()[0].y));
+                break;
         }
+        //console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);
+        this.socket.emit('refresh', player.serialize());
+    }
+
+    gameOver(){
+      this.isGameOver = true;
+      $('div#gameOver').show('fast', function() {
+        $( this ).animate({top:250}, 'slow');
+      });
+    }
+
+    gameWin(){
+      this.isGameOver = true;
+      $('div#gameWin').show('fast', function() {
+        $( this ).animate({top:250}, 'slow');
+      });
     }
 
 }

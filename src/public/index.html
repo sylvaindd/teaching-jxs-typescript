@@ -24,14 +24,15 @@
                 float: left;
                 margin-left: 5px;
             }
-        </style> 
+            .gameOver{font-weight:bold;text-shadow:2px 2px 1px #fff;position:absolute;top:0;left:550px;background:#eee;color:red;width:70px;border:50px solid #eee;text-align:center;-moz-border-radius:90px;-webkit-border-radius:90px;border-radius:90px;box-shadow:3px 3px 10px #999;}
+        </style>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="/system.js"></script>
         <script src="/socket.io/socket.io.js"></script>
     </head>
- 
+
     <body>
         <h1>Snake</h1>
 
@@ -41,25 +42,28 @@
         </form>
 
         <canvas id="canvas">
-        
+
         </canvas>
 
         <div id="rightDiv">
             <input id="start" value="start" type="button"/>
             <ul id="listPlayers">
-            
+
             </ul>
         </div>
-        
-        
-        
-        
+
+
+
+
+
+        <div id="gameOver" class="gameOver" style="display:none">Oops! Game Over</div>
+        <div id="gameWin" class="gameOver" style="display:none">Yey! YOU WON</div>
         <div id="dialogInit" title="Basic dialog">
             <div id="dialogInitDiv">
                 <input id="nick" maxlength="10"/><input id="color" type="color">
             </div>
         </div>
-        
+
         <script>
             System.config({
                 defaultJSExtensions: true

@@ -91,6 +91,7 @@ var init = function(){
             if(v.ID == data.ID)
                 playerMoi = v;
         }
+        socket.emit('refresh', playerMoi.serialize());
         game.setPlayerMoi(playerMoi);
     });
 
@@ -126,7 +127,6 @@ var init = function(){
             v = v.player;
             let player:Player = new Player(v.nick, v.color, v.ID, canvas.width);
             game.players.players.push(player);
-            socket.emit('refresh', player.serialize());
             $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
         }
     }

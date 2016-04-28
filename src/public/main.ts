@@ -92,6 +92,8 @@ var init = function(){
                 playerMoi = v;
         }
         game.setPlayerMoi(playerMoi);
+        let player:Player = new Player(playerMoi.nick, playerMoi.color, playerMoi.ID, canvas.width);
+        socket.emit('refresh', player.serialize());
     });
 
     socket.on('start', function(data) {
@@ -124,9 +126,7 @@ var init = function(){
         game.players.players = new Array<Player>();
         for(let v of players){
             v = v.player;
-            let player:Player = new Player(v.nick, v.color, v.ID, canvas.width);
-            game.players.players.push(player);
-            socket.emit('refresh', player.serialize());
+            game.players.players.push(v);
             $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
         }
     }

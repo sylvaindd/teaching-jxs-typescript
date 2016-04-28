@@ -127,12 +127,8 @@ var init = function(){
         game.players.players = new Array<Player>();
         for(let v of players){
             v = v.player;
-<<<<<<< HEAD
-            game.players.players.push(v);
-=======
             let player:Player = new Player(v.nick, v.color, v.ID, canvas.width);
             game.players.players.push(player);
->>>>>>> 08afa8fd3ae45f31228059c6436a6ff6d248e59d
             $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
         }
     }

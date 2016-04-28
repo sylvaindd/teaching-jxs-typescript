@@ -1,10 +1,9 @@
 import {Movement} from "./interaction";
-
 export class SnakePart{
     x: number;
     y: number;
 
-    constructor (x, y) {
+    constructor (x:number, y:number) {
         this.x = x;
         this.y = y;
     }
@@ -13,7 +12,7 @@ export class SnakePart{
         return this.x + "-" + this.y;
     }
 
-    draw (ctx, color: number)
+    draw (ctx, color: number):void
     {
         ctx.beginPath();
         ctx.fillStyle = color;
@@ -21,7 +20,7 @@ export class SnakePart{
         ctx.stroke();
     }
 
-    drawMeal (ctx)
+    drawMeal (ctx):void
     {
         ctx.beginPath();
         ctx.fillStyle = "#000";
@@ -29,12 +28,20 @@ export class SnakePart{
         ctx.stroke();
     }
 
-    clear (ctx)
+    clear (ctx):void
     {
         ctx.clearRect(this.x, this.y, 5, 5);
         ctx.fillStyle = "#fff";
 	    ctx.fillRect(this.x, this.y, 5, 5);
     }
+}
+
+export class StartSnakePart extends SnakePart{
+    direction:Key;
+     constructor (x:number, y:number, direction:Key) {
+        super(x,y);
+        this.direction = direction;
+    }   
 }
 
 export class Snake {
@@ -43,9 +50,12 @@ export class Snake {
     lastKeyValide: number;
     startPoint: SnakePart
 
-    constructor(lenght:number, startPoint:SnakePart) {
+    constructor(lenght:number, startPoint?:SnakePart) {
         this.coords = new Array<SnakePart>();
-        this.init(lenght, startPoint);
+        if(startPoint != null)
+        {
+            this.init(lenght, startPoint); 
+        }
     }
 
     init(length:number, startPoint: SnakePart): void
@@ -60,7 +70,7 @@ export class Snake {
         }
     }
 
-    draw (ctx, color: number)
+    draw (ctx, color: number):void
     {
         let lastPoint:SnakePart = this.coords.pop();
         ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
@@ -76,7 +86,7 @@ export class Snake {
       this.coords = new Array<SnakePart>();
       for(let v of coords){
         let c = v.split("-");
-        this.coords.push(new SnakePart(c[0], c[1]));
+        this.coords.push(new SnakePart(parseInt(c[0]), parseInt(c[1])));
       }
     }
 
@@ -119,23 +129,51 @@ export class Snake {
 
 export class Players {
     players: Array<Player>;
-
-    constructor() {
+    startPoints: Array<StartSnakePart>;
+    
+    constructor(sizeCanvas?:number) {
         this.players = new Array<Player>();
+        this.generateStartPoints(sizeCanvas);
     }
+    
+    generateStartPoints(sizeCanvas:number):void
+    {
+        let keys = [
+           [Key.Right, Key.Right, Key.Down],
+           [Key.Up, Key.None, Key.Down],
+           [Key.Up, Key.Left, Key.Left]
+        ];
+        this.startPoints = new Array<StartSnakePart>();
+        let key:number = Key.Right;
+        for(let x:number = 0 ; x < 3 ; x++)
+        {
+            for(let y:number = 0 ; y < 3 ; y++)
+            {
+                if(y != 1 || x != 1)
+                {
+                    this.startPoints.push(new StartSnakePart(sizeCanvas/4*x,sizeCanvas/4*y,keys[x][y]));
+                }
+            }
+        }
+        this.shuffle(this.startPoints);
+    }
+    
+    shuffle(a:Array<StartSnakePart>):void {
+    var j, x, i;
+    for (i = a.length; i; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
+}
 
-    draw (ctx)
+    draw (ctx):void
     {
         for (let player of this.players)
         {
             player.draw(ctx);
         }
-    }
-
-    init(): void{
-      for(let v of this.players){
-        v.init();
-      }
     }
 
     addPlayer(player: Player): void{
@@ -191,31 +229,20 @@ export class Player {
     snake: Snake;
     socket;
     ID: number;
-    startPoints: Array<SnakePart>;
+    
 
-    constructor(nick: string, color: number, ID: number) {
+    constructor(nick: string, color: number, ID: number, startPoints?:Array<StartSnakePart>) {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
-        this.generateStartPoints();
-        this.snake = new Snake(5, this.startPoints[this.ID]);
-    }
-
-    generateStartPoints()
-    {
-        this.startPoints = new Array<SnakePart>();
-        let point1: SnakePart = new SnakePart(100,100);
-        this.startPoints.push(point1);
-        let point2: SnakePart = new SnakePart(100,300);
-        this.startPoints.push(point2);
-        let point3: SnakePart = new SnakePart(300,100);
-        this.startPoints.push(point3);
-        let point4: SnakePart = new SnakePart(300,300);
-        this.startPoints.push(point4);
-    }
-
-    init(): void{
-      this.snake = new Snake(5, this.startPoints[this.ID]);
+        if(startPoints != null)
+        {
+           this.snake = new Snake(5, startPoints[this.ID]); 
+        }
+        else{
+            this.snake = new Snake(5);
+        }
+        
     }
 
     getCoords(): Array<SnakePart>{
@@ -230,7 +257,7 @@ export class Player {
         return this.snake;
     }
 
-    draw (ctx)
+    draw (ctx):void
     {
         this.snake.draw(ctx, this.color);
     }
@@ -252,5 +279,6 @@ export enum Key {
     Left,
     Up,
     Right,
-    Down
+    Down,
+    None
 }

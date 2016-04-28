@@ -11,7 +11,7 @@ canvas.width=500;
 canvas.height=500;
 ctx.fillStyle = '#fff'; // set canvas' background color
 ctx.fillRect(0, 0, canvas.width, canvas.height);  // now fill the canvas
-const speed = 10;
+const speed = 20;
 const game: Game = new Game(canvas, speed);
 
 var nick;
@@ -124,7 +124,9 @@ var init = function(){
         game.players.players = new Array<Player>();
         for(let v of players){
             v = v.player;
-            game.players.players.push(new Player(v.nick, v.color, v.ID));
+            let player:Player = new Player(v.nick, v.color, v.ID);
+            game.players.players.push(player);
+            socket.emit('refresh', player.serialize());
             $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');
         }
     }

@@ -21,7 +21,7 @@ export class Game extends Interactor{
         this.canvasContext = canvas.getContext("2d");
         this.isGameOver = false;
 
-        this.players = new Players();
+        this.players = new Players(this.canvas.width);
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
 
@@ -75,7 +75,6 @@ export class Game extends Interactor{
       $('div#gameWin').hide('fast', function() {
         $( this ).animate({down:250}, 'slow');
       });
-      this.players.init();
     // TODO : initialize game
         this.generatePointMeal();
         this.animate(); // Start animation

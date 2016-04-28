@@ -21,7 +21,7 @@ export class Game extends Interactor{
         this.canvasContext = canvas.getContext("2d");
         this.isGameOver = false;
 
-        this.players = new Players(this.canvas.width);
+        this.players = new Players();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
 

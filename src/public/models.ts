@@ -129,44 +129,10 @@ export class Snake {
 
 export class Players {
     players: Array<Player>;
-    startPoints: Array<StartSnakePart>;
     
-    constructor(sizeCanvas?:number) {
+    constructor() {
         this.players = new Array<Player>();
-        this.generateStartPoints(sizeCanvas);
     }
-    
-    generateStartPoints(sizeCanvas:number):void
-    {
-        let keys = [
-           [Key.Right, Key.Right, Key.Down],
-           [Key.Up, Key.None, Key.Down],
-           [Key.Up, Key.Left, Key.Left]
-        ];
-        this.startPoints = new Array<StartSnakePart>();
-        let key:number = Key.Right;
-        for(let x:number = 0 ; x < 3 ; x++)
-        {
-            for(let y:number = 0 ; y < 3 ; y++)
-            {
-                if(y != 1 || x != 1)
-                {
-                    this.startPoints.push(new StartSnakePart(sizeCanvas/4*x,sizeCanvas/4*y,keys[x][y]));
-                }
-            }
-        }
-        this.shuffle(this.startPoints);
-    }
-    
-    shuffle(a:Array<StartSnakePart>):void {
-    var j, x, i;
-    for (i = a.length; i; i -= 1) {
-        j = Math.floor(Math.random() * i);
-        x = a[i - 1];
-        a[i - 1] = a[j];
-        a[j] = x;
-    }
-}
 
     draw (ctx):void
     {
@@ -229,20 +195,43 @@ export class Player {
     snake: Snake;
     socket;
     ID: number;
+    startPoints: Array<StartSnakePart>;
     
 
-    constructor(nick: string, color: number, ID: number, startPoints?:Array<StartSnakePart>) {
+    constructor(nick: string, color: number, ID: number, sizeCanvas?:number) {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
-        if(startPoints != null)
+        this.generateStartPoints(sizeCanvas);
+        if(this.startPoints != null)
         {
-           this.snake = new Snake(5, startPoints[this.ID]); 
+           this.snake = new Snake(5, this.startPoints[this.ID]); 
         }
         else{
             this.snake = new Snake(5);
         }
         
+    }
+    
+    generateStartPoints(sizeCanvas:number):void
+    {
+        let keys = [
+           [Key.Right, Key.Right, Key.Down],
+           [Key.Up, Key.None, Key.Down],
+           [Key.Up, Key.Left, Key.Left]
+        ];
+        this.startPoints = new Array<StartSnakePart>();
+        let key:number = Key.Right;
+        for(let x:number = 0 ; x < 3 ; x++)
+        {
+            for(let y:number = 0 ; y < 3 ; y++)
+            {
+                if(y != 1 || x != 1)
+                {
+                    this.startPoints.push(new StartSnakePart(sizeCanvas/4*x,sizeCanvas/4*y,keys[x][y]));
+                }
+            }
+        }
     }
 
     getCoords(): Array<SnakePart>{

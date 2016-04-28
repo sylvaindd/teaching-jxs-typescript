@@ -124,7 +124,7 @@ var init = function(){
         game.players.players = new Array<Player>();
         for(let v of players){
             v = v.player;
-            let player:Player = new Player(v.nick, v.color, v.ID);
+            let player:Player = new Player(v.nick, v.color, v.ID, canvas.width);
             game.players.players.push(player);
             socket.emit('refresh', player.serialize());
             $('#listPlayers').append('<li style="color:'+v.color+'" data-id="'+v.ID+'">'+v.nick+'</li>');

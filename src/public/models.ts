@@ -40,6 +40,7 @@ export class SnakePart{
 export class Snake {
     coords: Array<SnakePart>;
     lastKey: number;
+    lastKeyValide: number;
     startPoint: SnakePart
 
     constructor(lenght:number, startPoint:SnakePart) {
@@ -50,6 +51,7 @@ export class Snake {
     init(length:number, startPoint: SnakePart): void
     {
         this.lastKey = Key.Right;
+        this.lastKeyValide = this.lastKey;
         this.coords.push(startPoint);
         for(let i:number = 1 ; i < length ; i++)
         {

@@ -56,7 +56,7 @@ export class Game extends Interactor{
     }
 
     onArrowkeyPressed(movement: Movement): void{
-      if(this.playerMoi.getSnake().lastKey == Key.Up && movement.key == Key.Down || this.playerMoi.getSnake().lastKey == Key.Down && movement.key == Key.Up || this.playerMoi.getSnake().lastKey == Key.Right && movement.key == Key.Left || this.playerMoi.getSnake().lastKey == Key.Left && movement.key == Key.Right){return;}
+      if(this.playerMoi.getSnake().lastKeyValide == Key.Up && movement.key == Key.Down || this.playerMoi.getSnake().lastKeyValide == Key.Down && movement.key == Key.Up || this.playerMoi.getSnake().lastKeyValide == Key.Right && movement.key == Key.Left || this.playerMoi.getSnake().lastKeyValide == Key.Left && movement.key == Key.Right){return;}
       this.playerMoi.snake.lastKey = movement.key;
     }
 
@@ -161,6 +161,7 @@ export class Game extends Interactor{
         }
         //console.log(this.playerMoi.snake.coords);
         this.players.draw(this.canvasContext);
+        this.playerMoi.getSnake().lastKeyValide = this.playerMoi.getSnake().lastKey;
         this.socket.emit('refresh', player.serialize());
     }
 

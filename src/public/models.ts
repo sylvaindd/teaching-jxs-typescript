@@ -72,10 +72,7 @@ export class Snake {
 
     draw (ctx, color: number):void
     {
-        let lastPoint:SnakePart = this.coords.pop();
-        ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
-        ctx.fillStyle = "#fff";
-	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
+        this.coords.pop();
         for (let point of this.coords)
         {
             point.draw(ctx, color);
@@ -134,8 +131,9 @@ export class Players {
         this.players = new Array<Player>();
     }
 
-    draw (ctx):void
+    draw (ctx, canvas : HTMLCanvasElement):void
     {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let player of this.players)
         {
             player.draw(ctx);

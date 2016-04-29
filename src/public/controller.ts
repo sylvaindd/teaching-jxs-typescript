@@ -159,7 +159,7 @@ export class Game extends Interactor{
             this.generatePointMeal();
         }
         //console.log(this.playerMoi.snake.coords);
-        this.players.draw(this.canvasContext);
+        this.players.draw(this.canvasContext, this.canvas);
         this.playerMoi.getSnake().lastKeyValide = this.playerMoi.getSnake().lastKey;
         this.socket.emit('refresh', player.serialize());
     }
@@ -168,6 +168,7 @@ export class Game extends Interactor{
       this.isGameOver = true;
       $('div#gameOver').show('fast', function() {
         $( this ).animate({top:250}, 'slow');
+        
       });
     }
 

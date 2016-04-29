@@ -72,10 +72,7 @@ export class Snake {
 
     draw (ctx, color: number):void
     {
-        let lastPoint:SnakePart = this.coords.pop();
-        ctx.clearRect(lastPoint.x, lastPoint.y, 5, 5);
-        ctx.fillStyle = "#fff";
-	    ctx.fillRect(lastPoint.x, lastPoint.y, 5, 5);
+        this.coords.pop();
         for (let point of this.coords)
         {
             point.draw(ctx, color);
@@ -134,11 +131,15 @@ export class Players {
         this.players = new Array<Player>();
     }
 
-    draw (ctx):void
+    draw (ctx, canvas : HTMLCanvasElement):void
     {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let player of this.players)
         {
-            player.draw(ctx);
+            if(!player.lose)
+            {
+                player.draw(ctx);    
+            }
         }
     }
 
@@ -196,6 +197,7 @@ export class Player {
     socket;
     ID: number;
     startPoints: Array<StartSnakePart>;
+    lose: boolean;
     
 
     constructor(nick: string, color: number, ID: number, sizeCanvas?:number) {
@@ -205,10 +207,10 @@ export class Player {
         this.generateStartPoints(sizeCanvas);
         if(this.startPoints != null)
         {
-           this.snake = new Snake(5, this.startPoints[this.ID]); 
+           this.snake = new Snake(10, this.startPoints[this.ID]); 
         }
         else{
-            this.snake = new Snake(5);
+            this.snake = new Snake(10);
         }
         
     }
@@ -222,13 +224,13 @@ export class Player {
         ];
         this.startPoints = new Array<StartSnakePart>();
         let key:number = Key.Right;
-        for(let x:number = 0 ; x < 3 ; x++)
+        for(let x:number = 1 ; x <= 3 ; x++)
         {
-            for(let y:number = 0 ; y < 3 ; y++)
+            for(let y:number = 1 ; y <= 3 ; y++)
             {
-                if(y != 1 || x != 1)
+                if(y != 2 || x != 2)
                 {
-                    this.startPoints.push(new StartSnakePart(sizeCanvas/4*x,sizeCanvas/4*y,keys[x][y]));
+                    this.startPoints.push(new StartSnakePart(sizeCanvas/4*x,sizeCanvas/4*y,keys[x-1][y-1]));
                 }
             }
         }

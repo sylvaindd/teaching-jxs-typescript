@@ -96,5 +96,4 @@ var gameOver = function(player: Player) {
     // player.socket.destroy();//TODO
 }
 
-
 server.listen(8080);

@@ -93,6 +93,8 @@ var init = function(){
         }
         socket.emit('refresh', playerMoi.serialize());
         game.setPlayerMoi(playerMoi);
+        let player:Player = new Player(playerMoi.nick, playerMoi.color, playerMoi.ID, canvas.width);
+        socket.emit('refresh', player.serialize());
     });
 
     socket.on('start', function(data) {

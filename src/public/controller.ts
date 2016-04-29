@@ -37,7 +37,8 @@ export class Game extends Interactor{
               var coords = v.snake.coords;
               coords = coords.replace(/'/g, '"');
               coords = JSON.parse(coords);
-              this.players.getByID(v.ID).deserializeCoords(coords);
+              if(this.players.getByID(v.ID) != null)
+                this.players.getByID(v.ID).deserializeCoords(coords);
             }
           }
       }.bind(this));

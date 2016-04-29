@@ -33,7 +33,7 @@ export class Movement {
         e.preventDefault(); 
         
         this.interactor.onArrowkeyPressed(this);
-        console.log("Key press : " + this.key);
+        // console.log("Key press : " + this.key);
     }
 }
 

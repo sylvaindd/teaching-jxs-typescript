@@ -12,7 +12,7 @@ var app = require('express')(),
 require('./routes')(app);
 
 let players: Players = new Players();
-let IDs: Array<boolean>;
+let IDs: Array<boolean> = new Array<boolean>(8);
 let isGameRuning: boolean = false;
 let canvas = {width : 500, height: 500};
 let keys = [
@@ -21,6 +21,7 @@ let keys = [
     [Key.Up, Key.Left, Key.Left]
 ];
 let startPoints: Array<StartSnakePart>;
+let remainingPlayers: number;
 
 generateStartPoints();
         
@@ -52,10 +53,11 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('start', function() {
         isGameRuning = true;
+        remainingPlayers = players.players.length;
         io.sockets.emit('start');
         let refreshLoop = setInterval(function() {
             io.sockets.emit('refresh', { players: players.serialize() });
-            if (!isGameRuning || players.players.length == 0) {
+            if (!isGameRuning || remainingPlayers == 0) {
                 clearInterval(refreshLoop);
             }
         }, 20);
@@ -63,6 +65,8 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('disconnect', function() {
         var index = players.removePlayer(socket.player);
+        if(!socket.player.lose)
+            remainingPlayers--;
         socket.broadcast.emit('newPlayer', { players: players.array() });
     });
 });
@@ -100,11 +104,15 @@ function getRandomInt(min, max): number {
 
 var checkDetection = function() {
     for (let v of players.players) {
-      if(v.snake.arrayPosNoHead().indexOf(v.snake.getHeadPos()) > -1)
-          gameOver(v);
-        for (let v2 of players.players) {
-            if (v.ID != v2.ID && (v2.snake.arrayPos().indexOf(v.snake.getHeadPos()) >  -1 )) {
+        if(!v.lose){
+            if(v.snake.arrayPosNoHead().indexOf(v.snake.getHeadPos()) > -1)
                 gameOver(v);
+            for (let v2 of players.players) {
+                if(!v2.lose){
+                    if (v.ID != v2.ID && (v2.snake.arrayPos().indexOf(v.snake.getHeadPos()) >  -1 )) {
+                        gameOver(v);
+                    }
+                }
             }
         }
     }
@@ -113,10 +121,30 @@ var checkDetection = function() {
 var gameOver = function(player: Player) {
     io.sockets.emit('gameOver', { player: { ID: player.ID } });
     players.getByID(player.ID).lose = true;
-    if (players.players.length == 1) {
-        io.sockets.emit('gameWin', { player: { ID: players.players[0].ID } });
+    remainingPlayers = getRemainingPlayers();
+    if (remainingPlayers <= 1) {
+        remainingPlayers--;
+        isGameRuning = false;
+        io.sockets.emit('gameWin', { player: { ID: getWinner().ID } });
     }
     // player.socket.destroy();//TODO
+}
+
+function getRemainingPlayers(): number{
+    let i: number = 0;
+    for (let v of players.players) {
+        if(!v.lose)
+            i++;
+    }
+    return i;    
+}
+
+function getWinner(): Player{
+    for (let v of players.players) {
+        if(!v.lose)
+            return v;
+    }
+    return null;    
 }
 
 server.listen(8080);

@@ -52,6 +52,8 @@ export class Snake {
 
     constructor(lenght:number, startPoint?:SnakePart) {
         this.coords = new Array<SnakePart>();
+        this.lastKey = Key.Right;
+        this.lastKeyValide = this.lastKey;
         if(startPoint != null)
         {
             this.init(lenght, startPoint); 
@@ -60,8 +62,6 @@ export class Snake {
 
     init(length:number, startPoint: SnakePart): void
     {
-        this.lastKey = Key.Right;
-        this.lastKeyValide = this.lastKey;
         this.coords.push(startPoint);
         for(let i:number = 1 ; i < length ; i++)
         {
@@ -119,7 +119,10 @@ export class Snake {
         for(let v of this.coords){
            json += "'"+v.posString()+"',";
         }
-        json = json.substring(0, json.length - 1) + "]";
+        if(json.length > 1)
+            json = json.substring(0, json.length - 1) + "]";
+        else
+        json += "]";
         return json;
     }
 }

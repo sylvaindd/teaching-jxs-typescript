@@ -196,44 +196,21 @@ export class Player {
     snake: Snake;
     socket;
     ID: number;
-    startPoints: Array<StartSnakePart>;
     lose: boolean;
     
 
-    constructor(nick: string, color: number, ID: number, sizeCanvas?:number) {
+    constructor(nick: string, color: number, ID: number, startPoint?: StartSnakePart) {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
-        this.generateStartPoints(sizeCanvas);
-        if(this.startPoints != null)
+        if(startPoint != null)
         {
-           this.snake = new Snake(10, this.startPoints[this.ID]); 
+           this.snake = new Snake(10, startPoint); 
         }
         else{
             this.snake = new Snake(10);
         }
         
-    }
-    
-    generateStartPoints(sizeCanvas:number):void
-    {
-        let keys = [
-           [Key.Right, Key.Right, Key.Down],
-           [Key.Up, Key.None, Key.Down],
-           [Key.Up, Key.Left, Key.Left]
-        ];
-        this.startPoints = new Array<StartSnakePart>();
-        let key:number = Key.Right;
-        for(let x:number = 1 ; x <= 3 ; x++)
-        {
-            for(let y:number = 1 ; y <= 3 ; y++)
-            {
-                if(y != 2 || x != 2)
-                {
-                    this.startPoints.push(new StartSnakePart(sizeCanvas/4*x,sizeCanvas/4*y,keys[x-1][y-1]));
-                }
-            }
-        }
     }
 
     getCoords(): Array<SnakePart>{
@@ -254,7 +231,7 @@ export class Player {
     }
 
     serialize(): string{
-        return '{"player" : {"nick" : "' + this.nick + '" , "color" : "' + this.color + '", "ID" : "' + this.ID + '", "snake" : {"coords" : "' + this.snake.jsonPos() + '"}}}';
+        return '{"player" : {"nick" : "' + this.nick + '" , "color" : "' + this.color + '", "ID" : "' + this.ID + '", "lose" : "'+this.lose+'", "snake" : {"coords" : "' + this.snake.jsonPos() + '"}}}';
     }
 }
 

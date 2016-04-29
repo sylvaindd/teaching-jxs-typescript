@@ -2,7 +2,7 @@
 /// <reference path="../declarations/node.d.ts" />
 /// <reference path="../declarations/jquery.d.ts" />
 
-import {Players, Player, Snake, SnakePart, Key} from "./public/models";
+import {Players, Player, Snake, SnakePart, Key, StartSnakePart} from "./public/models";
 
 var app = require('express')(),
     server = require('http').createServer(app),
@@ -12,18 +12,23 @@ var app = require('express')(),
 require('./routes')(app);
 
 let players: Players = new Players();
-let IDs: Array<boolean> = 0;
+let IDs: Array<boolean>;
 let isGameRuning: boolean = false;
+let canvas = {width : 500, height: 500};
 let keys = [
     [Key.Right, Key.Right, Key.Down],
     [Key.Up, Key.None, Key.Down],
     [Key.Up, Key.Left, Key.Left]
 ];
+let startPoints: Array<StartSnakePart>;
+
+generateStartPoints();
         
 io.sockets.on('connection', function(socket) {
 
     socket.on('newPlayer', function(data) {
-        socket.player = new Player(data.nick, data.color, getID());
+        let ID: number = getID();
+        socket.player = new Player(data.nick, data.color, ID, startPoints[ID]);
         socket.player.socket = socket;
 
         players.addPlayer(socket.player);
@@ -61,6 +66,24 @@ io.sockets.on('connection', function(socket) {
         socket.broadcast.emit('newPlayer', { players: players.array() });
     });
 });
+
+
+    
+function generateStartPoints(): void
+{
+    startPoints = new Array<StartSnakePart>();
+    let key:number = Key.Right;
+    for(let x:number = 1 ; x <= 3 ; x++)
+    {
+        for(let y:number = 1 ; y <= 3 ; y++)
+        {
+            if(y != 2 || x != 2)
+            {
+                startPoints.push(new StartSnakePart(canvas.width/4*x, canvas.height/4*y,keys[x-1][y-1]));
+            }
+        }
+    }
+}
 
 function getID(): number{
     let ID: number;

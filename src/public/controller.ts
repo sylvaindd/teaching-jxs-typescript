@@ -88,11 +88,11 @@ export class Game extends Interactor{
     }
 
     animate() {
-            let fps = this.speed;
-            let now;
-            let then = Date.now();
-            let interval = 1000/fps;
-            let delta;
+        let fps = this.speed;
+        let now;
+        let then = Date.now();
+        let interval = 1000/fps;
+        let delta;
         let animationLoop = (function () {
             fps = this.speed;
             interval = 1000/fps;

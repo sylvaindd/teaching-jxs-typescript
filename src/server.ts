@@ -2,7 +2,7 @@
 /// <reference path="../declarations/node.d.ts" />
 /// <reference path="../declarations/jquery.d.ts" />
 
-import {Players, Player, Snake, SnakePart} from "./public/models";
+import {Players, Player, Snake, SnakePart, Key} from "./public/models";
 
 var app = require('express')(),
     server = require('http').createServer(app),
@@ -12,13 +12,18 @@ var app = require('express')(),
 require('./routes')(app);
 
 let players: Players = new Players();
-let IDs: number = 0;
+let IDs: Array<boolean> = 0;
 let isGameRuning: boolean = false;
-
+let keys = [
+    [Key.Right, Key.Right, Key.Down],
+    [Key.Up, Key.None, Key.Down],
+    [Key.Up, Key.Left, Key.Left]
+];
+        
 io.sockets.on('connection', function(socket) {
 
     socket.on('newPlayer', function(data) {
-        socket.player = new Player(data.nick, data.color, IDs++);
+        socket.player = new Player(data.nick, data.color, getID());
         socket.player.socket = socket;
 
         players.addPlayer(socket.player);
@@ -57,6 +62,18 @@ io.sockets.on('connection', function(socket) {
     });
 });
 
+function getID(): number{
+    let ID: number;
+    do{
+        ID = getRandomInt(0, 7);
+    }while(IDs[ID]);
+    IDs[ID] = true;
+    return ID;
+}
+
+function getRandomInt(min, max): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 var checkDetection = function() {
     for (let v of players.players) {
@@ -72,7 +89,7 @@ var checkDetection = function() {
 
 var gameOver = function(player: Player) {
     io.sockets.emit('gameOver', { player: { ID: player.ID } });
-    players.removePlayerByID(player.ID);
+    players.getByID(player.ID).lose = true;
     if (players.players.length == 1) {
         io.sockets.emit('gameWin', { player: { ID: players.players[0].ID } });
     }

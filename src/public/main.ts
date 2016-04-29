@@ -105,7 +105,7 @@ var init = function(){
         socket.destroy();
         return;
       }
-    }, 1000);
+    }, 2000);
 
     var init2 = function(){
       connected = true;

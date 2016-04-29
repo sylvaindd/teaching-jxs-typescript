@@ -48,7 +48,7 @@ io.sockets.on('connection', function(socket) {
             if (!isGameRuning || players.players.length == 0) {
                 clearInterval(refreshLoop);
             }
-        }, 50);
+        }, 20);
     });
 
     socket.on('disconnect', function() {

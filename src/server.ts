@@ -122,6 +122,7 @@ var gameOver = function(player: Player) {
     io.sockets.emit('gameOver', { player: { ID: player.ID } });
     players.getByID(player.ID).lose = true;
     remainingPlayers = getRemainingPlayers();
+    
     if (remainingPlayers <= 1) {
         remainingPlayers--;
         isGameRuning = false;

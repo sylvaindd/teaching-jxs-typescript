@@ -25,7 +25,7 @@ io.sockets.on('connection', function(socket) {
 
         io.sockets.emit('newPlayer', { players: players.serialize() });
         socket.emit('MyPlayer', { nick: socket.player.nick, color: socket.player.color, ID: socket.player.ID });
-    
+    });
 
     socket.on('refresh', function(data) {
         data = JSON.parse(data);
@@ -79,5 +79,4 @@ var gameOver = function(player: Player) {
     // player.socket.destroy();//TODO
 }
 
-});
 server.listen(8080);

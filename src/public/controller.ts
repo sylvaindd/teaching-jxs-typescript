@@ -13,7 +13,9 @@ export class Game extends Interactor{
     isGameOver: boolean;
     pointMeal: SnakePart
     socket;
-
+    counter: number;
+    freq: number;
+    
     constructor(public canvas : HTMLCanvasElement, public speed : number, public gridSize : number = 5) {
         super(canvas);
         this.gridWidth = canvas.width / gridSize;
@@ -21,6 +23,9 @@ export class Game extends Interactor{
         this.canvasContext = canvas.getContext("2d");
         this.isGameOver = false;
 
+        this.counter = 0;
+        this.freq = 10;
+        
         this.players = new Players();
         // TODO : listen to user interaction
         this.movement = new Movement(canvas, this);
@@ -84,18 +89,14 @@ export class Game extends Interactor{
         let then = Date.now();
         let interval = 1000/fps;
         let delta;
-        let counter: number = 0;
-        let freq: number = 10;
-        
+                
         let animationLoop = setInterval((function(){
             if (this.isGameOver) {
                 clearInterval(animationLoop);
             }
-            counter += freq;
-            if(counter % (1000 / this.speed) < freq){
-                this.update();
-            }
-        }).bind(this), freq);
+            this.counter += this.freq;
+            this.update();
+        }).bind(this), this.freq);
         
         // let animationLoop = (function () {
         //     fps = this.speed;
@@ -121,53 +122,44 @@ export class Game extends Interactor{
     update() {
         let tailleCase:number =5
         let player = this.players.getByID(this.playerMoi.ID);
-        switch (this.playerMoi.getSnake().lastKey) {
-            case Key.Up:
-                if(player.getCoords()[0].y <= 0){
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, this.canvas.height-tailleCase));
-                }else{
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-tailleCase));
-                }
+        if(this.counter % (1000 / this.speed) < this.freq){
+            switch (this.playerMoi.getSnake().lastKey) {
+                case Key.Up:
+                    if(player.getCoords()[0].y <= 0){
+                        player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, this.canvas.height-tailleCase));
+                    }else{
+                        player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y-tailleCase));
+                    }
 
-                break;
-            case Key.Down:
-                if(player.getCoords()[0].y >= this.canvas.height-5){
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, 0));
-                }else{
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+tailleCase));
-                }
-                break;
-            case Key.Right:
-                if(player.getCoords()[0].x >= this.canvas.width-5){
-                    player.getCoords().unshift(new SnakePart(0, player.getCoords()[0].y));
-                }else{
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+tailleCase, player.getCoords()[0].y));
-                }
-                break;
-            case Key.Left:
-                if(player.getCoords()[0].x <= 0){
-                    player.getCoords().unshift(new SnakePart(this.canvas.width-tailleCase, player.getCoords()[0].y));
-                }else{
-                    player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-tailleCase, player.getCoords()[0].y));
-                }
-                break;
-        }
-        // if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)
-        // {
-        //     for(let i:number = 0 ; i < 5 ; i++)
-        //     {
-        //         player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
-        //     }
-        //     this.speed+=5;
-        //     this.pointMeal.clear(this.canvasContext);
-        //     this.generatePointMeal();
-        // }
-        //console.log(this.playerMoi.snake.coords);
-        
+                    break;
+                case Key.Down:
+                    if(player.getCoords()[0].y >= this.canvas.height-5){
+                        player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, 0));
+                    }else{
+                        player.getCoords().unshift(new SnakePart(player.getCoords()[0].x, player.getCoords()[0].y+tailleCase));
+                    }
+                    break;
+                case Key.Right:
+                    if(player.getCoords()[0].x >= this.canvas.width-5){
+                        player.getCoords().unshift(new SnakePart(0, player.getCoords()[0].y));
+                    }else{
+                        player.getCoords().unshift(new SnakePart(player.getCoords()[0].x+tailleCase, player.getCoords()[0].y));
+                    }
+                    break;
+                case Key.Left:
+                    if(player.getCoords()[0].x <= 0){
+                        player.getCoords().unshift(new SnakePart(this.canvas.width-tailleCase, player.getCoords()[0].y));
+                    }else{
+                        player.getCoords().unshift(new SnakePart(player.getCoords()[0].x-tailleCase, player.getCoords()[0].y));
+                    }
+                    break;
+            }
+            player.snake.coords.pop();
+            this.playerMoi.getSnake().lastKeyValide = this.playerMoi.getSnake().lastKey;
+        }        
         this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.pointMeal.drawMeal(this.canvasContext);
         this.players.draw(this.canvasContext, this.canvas);
-        this.playerMoi.getSnake().lastKeyValide = this.playerMoi.getSnake().lastKey;
         this.socket.emit('refresh', player.serialize());
     }
 

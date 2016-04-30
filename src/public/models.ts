@@ -72,7 +72,6 @@ export class Snake {
 
     draw (ctx, color: number):void
     {
-        this.coords.pop();
         for (let point of this.coords)
         {
             point.draw(ctx, color);

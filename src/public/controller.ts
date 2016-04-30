@@ -40,8 +40,11 @@ export class Game extends Interactor{
             var coords = v.snake.coords;
             coords = coords.replace(/'/g, '"');
             coords = JSON.parse(coords);
-            if(this.players.getByID(v.ID) != null)
-                this.players.getByID(v.ID).deserializeCoords(coords);
+            let player: Player = this.players.getByID(v.ID);
+            if(player != null){
+                player.deserializeCoords(coords);
+                player.speed = v.speed;
+            }
         }
         this.pointMeal = new SnakePart(data.pointMeal.x, data.pointMeal.y);
       }.bind(this));
@@ -83,13 +86,7 @@ export class Game extends Interactor{
         this.animate(); // Start animation
     }
 
-    animate() {
-        let fps = this.speed;
-        let now;
-        let then = Date.now();
-        let interval = 1000/fps;
-        let delta;
-                
+    animate() {                
         let animationLoop = setInterval((function(){
             if (this.isGameOver) {
                 clearInterval(animationLoop);
@@ -97,23 +94,6 @@ export class Game extends Interactor{
             this.counter += this.freq;
             this.update();
         }).bind(this), this.freq);
-        
-        // let animationLoop = (function () {
-        //     fps = this.speed;
-        //     interval = 1000/fps;
-        //     if (!this.isGameOver) {
-        //         requestAnimationFrame(animationLoop);
-        //     }
-        //     now = Date.now();
-        //     delta = now - then;
-
-        //     if (delta > interval) {
-        //         then = now - (delta % interval);
-        //         this.update();
-        //     }
-        // }).bind(this);
-
-        // animationLoop();
     }
 
         /**
@@ -122,7 +102,7 @@ export class Game extends Interactor{
     update() {
         let tailleCase:number =5
         let player = this.players.getByID(this.playerMoi.ID);
-        if(this.counter % (1000 / this.speed) < this.freq){
+        if(this.counter % (1000 / player.speed) < this.freq){
             switch (this.playerMoi.getSnake().lastKey) {
                 case Key.Up:
                     if(player.getCoords()[0].y <= 0){

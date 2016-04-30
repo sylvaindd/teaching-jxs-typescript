@@ -198,12 +198,13 @@ export class Player {
     socket;
     ID: number;
     lose: boolean;
-    
+    speed: number;
 
-    constructor(nick: string, color: number, ID: number, startPoint?: StartSnakePart) {
+    constructor(nick: string, color: number, ID: number, speed: number, startPoint?: StartSnakePart) {
         this.nick = nick;
         this.color = color;
         this.ID = ID;
+        this.speed = speed;
         if(startPoint != null)
         {
            this.snake = new Snake(10, startPoint); 
@@ -232,7 +233,7 @@ export class Player {
     }
 
     serialize(): string{
-        return '{"player" : {"nick" : "' + this.nick + '" , "color" : "' + this.color + '", "ID" : "' + this.ID + '", "lose" : "'+this.lose+'", "snake" : {"coords" : "' + this.snake.jsonPos() + '"}}}';
+        return '{"player" : {"nick" : "' + this.nick + '" , "color" : "' + this.color + '", "ID" : "' + this.ID + '", "lose" : "'+this.lose+'", "speed" : "'+this.speed+'", "snake" : {"coords" : "' + this.snake.jsonPos() + '"}}}';
     }
 }
 

@@ -31,7 +31,7 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('newPlayer', function(data) {
         let ID: number = getID();
-        socket.player = new Player(data.nick, data.color, ID, startPoints[ID]);
+        socket.player = new Player(data.nick, data.color, ID, data.speed, startPoints[ID]);
         socket.player.socket = socket;
 
         players.addPlayer(socket.player);
@@ -132,6 +132,7 @@ function checkDetection() {
                 for(let i:number = 0 ; i < 5 ; i++){
                     v.getCoords().push(new SnakePart(v.getCoords()[v.getCoords().length-1].x, v.getCoords()[v.getCoords().length-1].y));
                 }
+                v.speed += 5;
                 generatePointMeal();
                 refresh();
             }

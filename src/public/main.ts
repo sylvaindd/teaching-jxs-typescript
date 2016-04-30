@@ -92,7 +92,7 @@ var init = function(){
                 playerMoi = v;
         }
         game.setPlayerMoi(playerMoi);
-        let player:Player = new Player(playerMoi.nick, playerMoi.color, playerMoi.ID);
+        let player:Player = new Player(playerMoi.nick, playerMoi.color, playerMoi.ID, game.speed);
     });
 
     socket.on('start', function(data) {
@@ -116,7 +116,7 @@ var init = function(){
           socket.emit('start');
       });
 
-      socket.emit('newPlayer', {nick : nick, color : color});
+      socket.emit('newPlayer', {nick : nick, color : color, speed : game.speed});
       document.title = nick + ' - ' + document.title;
     }
 
@@ -125,7 +125,7 @@ var init = function(){
         game.players.players = new Array<Player>();
         for(let v of players){
             v = v.player;
-            let player:Player = new Player(v.nick, v.color, v.ID);
+            let player:Player = new Player(v.nick, v.color, v.ID, v.speed);
             var coords = v.snake.coords;
             coords = coords.replace(/'/g, '"');
             coords = JSON.parse(coords);

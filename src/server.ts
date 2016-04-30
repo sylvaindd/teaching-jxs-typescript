@@ -129,8 +129,9 @@ function checkDetection() {
             if(v.snake.arrayPosNoHead().indexOf(v.snake.getHeadPos()) > -1)
                 gameOver(v);
             if(v.snake.getHeadPos() == pointMeal.posString()){
-                for(let i:number = 0 ; i < 5 ; i++)
+                for(let i:number = 0 ; i < 5 ; i++){
                     v.getCoords().push(new SnakePart(v.getCoords()[v.getCoords().length-1].x, v.getCoords()[v.getCoords().length-1].y));
+                }
                 generatePointMeal();
                 refresh();
             }

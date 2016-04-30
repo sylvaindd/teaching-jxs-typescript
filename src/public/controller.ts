@@ -28,25 +28,23 @@ export class Game extends Interactor{
     }
 
     addSocket(socket): void{
-      this.socket = socket;
-      this.socket.on('refresh', function(data){
-        data = JSON.parse(data.players);
-        for(let v of data.players){
-          v = v.player;
-           if(this.playerMoi.ID != v.ID){
-              var coords = v.snake.coords;
-              coords = coords.replace(/'/g, '"');
-              coords = JSON.parse(coords);
-              if(this.players.getByID(v.ID) != null)
+        this.socket = socket;
+        this.socket.on('refresh', function(data){
+        for(let v of JSON.parse(data.players).players){
+            v = v.player;
+            var coords = v.snake.coords;
+            coords = coords.replace(/'/g, '"');
+            coords = JSON.parse(coords);
+            if(this.players.getByID(v.ID) != null)
                 this.players.getByID(v.ID).deserializeCoords(coords);
-            }
-          }
+        }
+        this.pointMeal = new SnakePart(data.pointMeal.x, data.pointMeal.y);
       }.bind(this));
       this.socket.on('gameOver', function(data){
         if(data.player.ID == this.playerMoi.ID){
-          this.gameOver();
+            this.gameOver();
         }else{
-          this.players.removePlayerByID(data.player.ID);
+            this.players.removePlayerByID(data.player.ID);
         }
       }.bind(this));
       this.socket.on('gameWin', function(data){
@@ -69,23 +67,15 @@ export class Game extends Interactor{
          * Start game
          */
     start() {
-      this.isGameOver = false;
-      $('div#gameOver').hide('fast', function() {
-        $( this ).animate({down:250}, 'slow');
-      });
-      $('div#gameWin').hide('fast', function() {
-        $( this ).animate({down:250}, 'slow');
-      });
-    // TODO : initialize game
-        this.generatePointMeal();
+        this.isGameOver = false;
+        $('div#gameOver').hide('fast', function() {
+            $( this ).animate({down:250}, 'slow');
+        });
+        $('div#gameWin').hide('fast', function() {
+            $( this ).animate({down:250}, 'slow');
+        });
+        // TODO : initialize game
         this.animate(); // Start animation
-    }
-
-    generatePointMeal(){
-        let x:number = Math.floor(Math.random() * this.canvas.width/5);
-        let y:number = Math.floor(Math.random() * this.canvas.width/5);
-        this.pointMeal = new SnakePart(x*5,y*5);
-        this.pointMeal.drawMeal(this.canvasContext);
     }
 
     animate() {
@@ -95,16 +85,17 @@ export class Game extends Interactor{
         let interval = 1000/fps;
         let delta;
         let counter: number = 0;
+        let freq: number = 10;
         
         let animationLoop = setInterval((function(){
             if (this.isGameOver) {
                 clearInterval(animationLoop);
             }
-            counter += 10;
-            if(counter % (1000 / this.speed) < 10){
+            counter += freq;
+            if(counter % (1000 / this.speed) < freq){
                 this.update();
             }
-        }).bind(this), 10);
+        }).bind(this), freq);
         
         // let animationLoop = (function () {
         //     fps = this.speed;
@@ -161,17 +152,20 @@ export class Game extends Interactor{
                 }
                 break;
         }
-        if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)
-        {
-            for(let i:number = 0 ; i < 5 ; i++)
-            {
-                player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
-            }
-            this.speed+=5;
-            this.pointMeal.clear(this.canvasContext);
-            this.generatePointMeal();
-        }
+        // if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)
+        // {
+        //     for(let i:number = 0 ; i < 5 ; i++)
+        //     {
+        //         player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
+        //     }
+        //     this.speed+=5;
+        //     this.pointMeal.clear(this.canvasContext);
+        //     this.generatePointMeal();
+        // }
         //console.log(this.playerMoi.snake.coords);
+        
+        this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.pointMeal.drawMeal(this.canvasContext);
         this.players.draw(this.canvasContext, this.canvas);
         this.playerMoi.getSnake().lastKeyValide = this.playerMoi.getSnake().lastKey;
         this.socket.emit('refresh', player.serialize());

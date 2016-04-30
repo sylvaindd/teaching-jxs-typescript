@@ -22,6 +22,8 @@ let keys = [
 ];
 let startPoints: Array<StartSnakePart>;
 let remainingPlayers: number;
+let pointMeal: SnakePart;
+let refreshLoop;
 
 generateStartPoints();
         
@@ -54,13 +56,9 @@ io.sockets.on('connection', function(socket) {
     socket.on('start', function() {
         isGameRuning = true;
         remainingPlayers = players.players.length;
+        generatePointMeal();
         io.sockets.emit('start');
-        let refreshLoop = setInterval(function() {
-            io.sockets.emit('refresh', { players: players.serialize() });
-            if (!isGameRuning || remainingPlayers == 0) {
-                clearInterval(refreshLoop);
-            }
-        }, 20);
+        refreshLoop = setInterval(refresh, 10);
     });
 
     socket.on('disconnect', function() {
@@ -71,6 +69,18 @@ io.sockets.on('connection', function(socket) {
     });
 });
 
+function refresh(){
+    io.sockets.emit('refresh', { players: players.serialize(), pointMeal : {x : pointMeal.x, y : pointMeal.y}});
+    if (!isGameRuning || remainingPlayers == 0) {
+        clearInterval(refreshLoop);
+    }
+}
+
+function generatePointMeal(){
+    let x:number = Math.floor(Math.random() * canvas.width/5);
+    let y:number = Math.floor(Math.random() * canvas.height/5);
+    pointMeal = new SnakePart(x*5, y*5);
+}
 
     
 function generateStartPoints(): void
@@ -102,11 +112,28 @@ function getRandomInt(min, max): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var checkDetection = function() {
+// if(player.getCoords()[0].x == this.pointMeal.x && player.getCoords()[0].y == this.pointMeal.y)
+        // {
+        //     for(let i:number = 0 ; i < 5 ; i++)
+        //     {
+        //         player.getCoords().push(new SnakePart(player.getCoords()[player.getCoords().length-1].x, player.getCoords()[player.getCoords().length-1].y));
+        //     }
+        //     this.speed+=5;
+        //     this.pointMeal.clear(this.canvasContext);
+        //     this.generatePointMeal();
+        // }
+
+function checkDetection() {
     for (let v of players.players) {
         if(!v.lose){
             if(v.snake.arrayPosNoHead().indexOf(v.snake.getHeadPos()) > -1)
                 gameOver(v);
+            if(v.snake.getHeadPos() == pointMeal.posString()){
+                for(let i:number = 0 ; i < 5 ; i++)
+                    v.getCoords().push(new SnakePart(v.getCoords()[v.getCoords().length-1].x, v.getCoords()[v.getCoords().length-1].y));
+                generatePointMeal();
+                refresh();
+            }
             for (let v2 of players.players) {
                 if(!v2.lose){
                     if (v.ID != v2.ID && (v2.snake.arrayPos().indexOf(v.snake.getHeadPos()) >  -1 )) {

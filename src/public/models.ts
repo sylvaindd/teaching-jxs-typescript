@@ -136,7 +136,6 @@ export class Players {
 
     draw (ctx, canvas : HTMLCanvasElement):void
     {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let player of this.players)
         {
             if(!player.lose)

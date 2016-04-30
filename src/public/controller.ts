@@ -94,22 +94,34 @@ export class Game extends Interactor{
         let then = Date.now();
         let interval = 1000/fps;
         let delta;
-        let animationLoop = (function () {
-            fps = this.speed;
-            interval = 1000/fps;
-            if (!this.isGameOver) {
-                requestAnimationFrame(animationLoop);
+        let counter: number = 0;
+        
+        let animationLoop = setInterval((function(){
+            if (this.isGameOver) {
+                clearInterval(animationLoop);
             }
-            now = Date.now();
-            delta = now - then;
-
-            if (delta > interval) {
-                then = now - (delta % interval);
+            counter += 10;
+            if(counter % (1000 / this.speed) < 10){
                 this.update();
             }
-        }).bind(this);
+        }).bind(this), 10);
+        
+        // let animationLoop = (function () {
+        //     fps = this.speed;
+        //     interval = 1000/fps;
+        //     if (!this.isGameOver) {
+        //         requestAnimationFrame(animationLoop);
+        //     }
+        //     now = Date.now();
+        //     delta = now - then;
 
-        animationLoop();
+        //     if (delta > interval) {
+        //         then = now - (delta % interval);
+        //         this.update();
+        //     }
+        // }).bind(this);
+
+        // animationLoop();
     }
 
         /**
